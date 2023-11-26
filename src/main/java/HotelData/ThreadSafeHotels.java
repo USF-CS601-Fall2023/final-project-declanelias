@@ -1,5 +1,6 @@
 package HotelData;
 
+import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -28,6 +29,22 @@ public class ThreadSafeHotels extends HotelData {
         } finally {
             lock.writeLock().unlock();
         }
+    }
+
+    /**
+     * Reads from map in thread sage way
+     * @param word word in hotel name
+     * @return list of hotel ids with word in hotel name
+     */
+    @Override
+    public List<Hotel> searchByWord(String word) {
+        try {
+            lock.readLock().lock();
+            return super.searchByWord(word);
+        } finally {
+            lock.readLock().unlock();
+        }
+
     }
 
     /**

@@ -28,6 +28,10 @@ public final class Hotel implements JsonInterface{
         return id;
     }
 
+    public String getHotelName() {
+        return hotelName;
+    }
+
     @Override
     public String toString() {
         return  hotelName + ": " + id + '\n' +

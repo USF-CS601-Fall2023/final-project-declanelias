@@ -1,9 +1,6 @@
 package HotelData;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * This class constructs the data structure containing information about the hotels
@@ -12,6 +9,7 @@ public class HotelData {
 
     private List<Hotel> hotels;
     private TreeMap<String, Hotel> hotelMap;
+    private Map<String, List<Hotel>> wordMap;
 
     /**
      * Constructor method
@@ -20,6 +18,7 @@ public class HotelData {
     public HotelData(List<Hotel> hotels) {
         this.hotels = hotels;
         hotelMap = new TreeMap<>(String::compareTo);
+        wordMap = new HashMap<>();
     }
 
     /**
@@ -32,11 +31,29 @@ public class HotelData {
     }
 
     /**
-     * Adds individual hotel info to map
+     * Adds individual hotel info to map and add words of name to word map
      * @param hotel hotel object
      */
     public void addToMap(Hotel hotel) {
         hotelMap.putIfAbsent(hotel.getId(), hotel);
+
+        String name = hotel.getHotelName();
+        String[] wordsInName = name.split("\\W|-|,");
+
+        for (String word : wordsInName) {
+            wordMap.putIfAbsent(word, new ArrayList<>());
+            List<Hotel> idList = wordMap.get(word);
+            idList.add(hotel);
+        }
+    }
+
+    /**
+     * Return list of hotelIds who's corresponding hotel name contains the word
+     * @param word word to search
+     * @return list of hotel ids or null
+     */
+    public List<Hotel> searchByWord(String word) {
+        return wordMap.getOrDefault(word, null);
     }
 
 
@@ -50,9 +67,5 @@ public class HotelData {
             return null;
         }
         return hotelMap.get(id);
-    }
-
-    public Map<String, Hotel> getHotelMap() {
-        return Collections.unmodifiableMap(hotelMap);
     }
 }

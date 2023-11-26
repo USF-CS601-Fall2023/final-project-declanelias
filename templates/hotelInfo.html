@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Hotel Info</title>
+</head>
+
+<body>
+
+#if($name != "anonymous")
+<h5>Hello, $name! </h5>
+#end
+
+<p>Hotels: </p>
+#foreach( $hotel in $hotels)
+  <a href="/hotel?hotelId=$hotel.id"> $hotel<br>
+ #end
+
+<resource name="style1.css" type="download" location="style1.css">
+</resource>
+
+</body>
+</html>

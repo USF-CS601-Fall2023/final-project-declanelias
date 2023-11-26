@@ -1,5 +1,7 @@
 package server;
 
+import HotelData.HotelData;
+import HotelData.Reviews;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -15,6 +17,9 @@ import java.io.StringWriter;
 
 public class HotelSearchServlet extends HttpServlet {
 
+    VelocityEngine ve;
+    VelocityContext context;
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,8 +30,8 @@ public class HotelSearchServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
 
-        VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
-        VelocityContext context = new VelocityContext();
+        ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
+        context = new VelocityContext();
 
         Template template = ve.getTemplate("templates/hotelSearch.html");
         context.put("name", username);
@@ -39,7 +44,19 @@ public class HotelSearchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        response.setContentType("text/html");
+        response.setStatus(HttpServletResponse.SC_OK);
+        PrintWriter out = response.getWriter();
+
         String word = request.getParameter("word");
-        response.getWriter().println(word);
+        HotelData hotels = (HotelData) getServletContext().getAttribute("hotels");
+
+        Template template = ve.getTemplate("templates/hotelInfo.html");
+        context.put("hotels", hotels.searchByWord(word));
+        StringWriter writer = new StringWriter();
+        template.merge(context, writer);
+
+        out.println(writer);
     }
 }
