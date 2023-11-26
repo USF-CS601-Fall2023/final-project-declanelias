@@ -2,43 +2,33 @@ package server;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHandler;
+import org.apache.velocity.app.VelocityEngine;
 
 public class JettyHotelServer {
 	public static final int PORT = 8080;
-	private Server jettyServer;
-	private ServletContextHandler handler;
 
 
-	public JettyHotelServer() {
-		jettyServer = new Server(PORT);
-	}
+	public static void main(String[] args) throws Exception {
+		Server server = new Server(PORT);
+
+		ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		handler.addServlet( "server.RegisterServlet", "/register");
+		handler.addServlet("server.LoginServlet", "/login");
+		handler.addServlet(HotelSearchServlet.class, "/hotelSearch");
 
 
-	public void start() throws Exception {
-		jettyServer.start();
-		jettyServer.join();
-	}
+		// initialize Velocity
+		VelocityEngine velocity = new VelocityEngine();
+		velocity.init();
 
+		// Set velocity as an attribute of the context so that we can access it
+		// from servlets
+		handler.setAttribute("templateEngine", velocity);
+		server.setHandler(handler);
 
-	public void addMapping(String path, String className){
-		// FILL IN CODE: call the method on the handler that adds the mapping between the path and the servlet
-		handler.addServlet(className, path);
-	}
-
-
-	public static void main(String[] args)  {
-		// FILL IN CODE, and add more classes as needed
-
-		JettyHotelServer server = new JettyHotelServer();
-
-		server.addMapping("/register", "RegisterServlet");
-
-		try {
-			server.start();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-
+		server.setHandler(handler);
+		server.start();
+		server.join();
 	}
 }
