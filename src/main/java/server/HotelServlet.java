@@ -29,10 +29,12 @@ public class HotelServlet extends HttpServlet {
         Reviews reviews = (Reviews) getServletContext().getAttribute("reviews");
         Set<HotelReview> hotelReviewSet = reviews.searchByID(Integer.parseInt(hotelId));
         context.put("reviews", hotelReviewSet);
+        context.put("avgRating", calcAvgRating(hotelReviewSet));
 
         HotelData hotelData = (HotelData) getServletContext().getAttribute("hotels");
         Hotel hotel = hotelData.searchByID(hotelId);
         context.put("hotel", hotel);
+
 
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -42,5 +44,18 @@ public class HotelServlet extends HttpServlet {
         template.merge(context, writer);
 
         response.getWriter().println(writer);
+    }
+
+    private double calcAvgRating(Set<HotelReview> reviews) {
+        return reviews
+                .stream()
+                .mapToDouble(HotelReview::getAverageRating)
+                .average()
+                .orElse(0);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("got");
     }
 }

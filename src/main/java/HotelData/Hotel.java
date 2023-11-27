@@ -21,7 +21,10 @@ public final class Hotel implements JsonInterface{
     @SerializedName("c")
     private String country;
 
+    private String expediaLink;
+
     public Hotel() {
+
     }
 
     public String getId() {
@@ -49,5 +52,17 @@ public final class Hotel implements JsonInterface{
         jsonObject.addProperty("lat", ll.getLat());
         jsonObject.addProperty("lng", ll.getLng());
         return jsonObject;
+    }
+
+    public String getExpediaLink() {
+        return "http://expedia.com/" +
+                city.replace(" ", "-") + "-" +
+                hotelName.replace(" ", "-") + ".h" +
+                id + ".Hotel-Information";
+
+    }
+
+    public String getAddress() {
+        return address + ", " + city + ", " + state;
     }
 }
