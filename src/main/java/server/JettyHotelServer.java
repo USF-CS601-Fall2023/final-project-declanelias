@@ -1,7 +1,10 @@
 package server;
 
 import HotelData.*;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.apache.velocity.app.VelocityEngine;
@@ -34,9 +37,15 @@ public class JettyHotelServer {
 		handler.setAttribute("templateEngine", velocity);
 		handler.setAttribute("hotels", hotels);
 		handler.setAttribute("reviews", reviews);
-		server.setHandler(handler);
 
-		server.setHandler(handler);
+		ResourceHandler resourceHandler = new ResourceHandler(); // a handler for serving static pages
+		resourceHandler.setDirectoriesListed(true);
+		resourceHandler.setResourceBase("templates");
+
+		HandlerList handlers = new HandlerList();
+		handlers.setHandlers(new Handler[] { resourceHandler, handler });
+		server.setHandler(handlers);
+
 		server.start();
 		server.join();
 	}

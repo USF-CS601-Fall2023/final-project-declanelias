@@ -1,6 +1,7 @@
 package HotelData;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -37,7 +38,7 @@ public class ThreadSafeHotels extends HotelData {
      * @return list of hotel ids with word in hotel name
      */
     @Override
-    public List<Hotel> searchByWord(String word) {
+    public Set<Hotel> searchByWord(String word) {
         try {
             lock.readLock().lock();
             return super.searchByWord(word);

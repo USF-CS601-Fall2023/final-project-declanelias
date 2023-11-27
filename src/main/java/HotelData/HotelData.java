@@ -9,7 +9,7 @@ public class HotelData {
 
     private List<Hotel> hotels;
     private TreeMap<String, Hotel> hotelMap;
-    private Map<String, List<Hotel>> wordMap;
+    private Map<String, Set<Hotel>> wordMap;
 
     /**
      * Constructor method
@@ -19,6 +19,7 @@ public class HotelData {
         this.hotels = hotels;
         hotelMap = new TreeMap<>(String::compareTo);
         wordMap = new HashMap<>();
+        wordMap.put("", new HashSet<>());
     }
 
     /**
@@ -41,9 +42,14 @@ public class HotelData {
         String[] wordsInName = name.split("\\W|-|,");
 
         for (String word : wordsInName) {
-            wordMap.putIfAbsent(word, new ArrayList<>());
-            List<Hotel> idList = wordMap.get(word);
+            word = word.toLowerCase();
+            wordMap.putIfAbsent(word, new HashSet<>());
+            Set<Hotel> idList = wordMap.get(word);
             idList.add(hotel);
+
+            Set<Hotel> emptyWordSet = wordMap.get("");
+            emptyWordSet.add(hotel);
+
         }
     }
 
@@ -52,7 +58,7 @@ public class HotelData {
      * @param word word to search
      * @return list of hotel ids or null
      */
-    public List<Hotel> searchByWord(String word) {
+    public Set<Hotel> searchByWord(String word) {
         return wordMap.getOrDefault(word, null);
     }
 

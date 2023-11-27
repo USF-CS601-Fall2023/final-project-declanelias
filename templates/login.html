@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <script src="js/displayLoginError.js"></script>
+</head>
+
+<body>
+
+<p> Login Below </p>
+<form id="loginForm" method="post" action="/login" onsubmit="updatePage(event);">
+    Username: <br> <input type="text" name="username"> <br>
+    Password: <br> <input type="password" name="password"> <br>
+    <p> <input type="submit" value="Login"></p>
+</form>
+<p id="messageFromServer" style="color:red"></p>
+</body>

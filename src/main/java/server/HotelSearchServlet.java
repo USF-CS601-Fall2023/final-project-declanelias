@@ -50,6 +50,7 @@ public class HotelSearchServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         String word = request.getParameter("word");
+        word = word.toLowerCase();
         HotelData hotels = (HotelData) getServletContext().getAttribute("hotels");
 
         Template template = ve.getTemplate("templates/hotelInfo.html");

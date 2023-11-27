@@ -12,7 +12,7 @@
 
 <p>Hotels: </p>
 #foreach( $hotel in $hotels)
-  <a href="/hotel?hotelId=$hotel.id"> $hotel<br>
+  <a href="/hotel?hotelId=$hotel.id"> $hotel.hotelName<br>
  #end
 
 <resource name="style1.css" type="download" location="style1.css">
