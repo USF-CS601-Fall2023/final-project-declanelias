@@ -1,6 +1,9 @@
 package server;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.mysql.cj.util.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -14,94 +17,36 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Modified from the example of Prof. Engle
  */
 @SuppressWarnings("serial")
-public class LoginServlet extends HttpServlet {
-
-//    @Override
-//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        PrintWriter out = response.getWriter();
-//        String username = request.getParameter("username");
-//
-//        username = StringEscapeUtils.escapeHtml4(username);
-//
-//        if (request.getParameter("username") == null) {
-//            out.println("Please login below.</p>");
-//            out.println();
-//            response.setContentType("text/html");
-//            response.setStatus(HttpServletResponse.SC_OK);
-//            out.printf("<html>%n%n");
-//            out.printf("<head><title>%s</title></head>%n", "Form");
-//            out.printf("<body>%n");
-//
-//            printForm(request, response);
-//
-//            out.printf("%n</body>%n");
-//            out.printf("</html>%n");
-//        } else {
-//            // already logged in
-//            out.println("Login successful. Welcome, " + username);
-//        }
-//    }
-//
-
-
+public class LoginServlet extends HttpServlet implements AuthenticationServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
-        PrintWriter out = response.getWriter();
-
-        HttpSession session = request.getSession();
-        if (session.getAttribute("username") != null) {
-            response.sendRedirect("/hotelSearch");
-        } else {
-            VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
-            VelocityContext context = new VelocityContext();
-
-            Template template = ve.getTemplate("templates/login.html");
-
-            StringWriter writer = new StringWriter();
-            template.merge(context, writer);
-            out.println(writer);
-        }
+        VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
+        doGetHelper(request, response, "templates/login.html", ve);
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String user = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        System.out.println(user);
+        List<String> usernameAndPassword = getUserNameAndPassword(request);
+        String user = usernameAndPassword.get(0);
+        String password = usernameAndPassword.get(1);
 
         DatabaseHandler dbHandler = DatabaseHandler.getInstance();
         boolean flag = dbHandler.authenticateUser(user, password);
+
+        PrintWriter out = response.getWriter();
         if (flag) {
             HttpSession session = request.getSession();
             session.setAttribute("username", user);
-
-            response.sendRedirect("/hotelSearch");
+            sendValidJson(out);
         } else {
-            JsonObject obj = new JsonObject();
-            obj.addProperty("message", "Invalid username or password");
-            response.getWriter().println(obj);
+            sendInvalidJson("Invalid username or password", out);
         }
     }
-//
-//    private static void printForm(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        PrintWriter out = response.getWriter();
-//
-//        out.printf("<form method=\"post\" action=\"%s\">%n", request.getServletPath());
-//        out.printf("Enter your username:<br><input type=\"text\" name=\"username\"><br>");
-//        out.printf("Enter your password:<br><input type=\"password\" name=\"pass\"><br>");
-//        out.printf("<p><input type=\"submit\" value=\"Enter\"></p>\n%n");
-//        out.printf("</form>\n%n");
-//    }
-
-
-
-
 }

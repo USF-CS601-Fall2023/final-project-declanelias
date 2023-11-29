@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <title>Login</title>
-    <script src="js/displayLoginError.js"></script>
+    <script src="js/validate.js"></script>
 </head>
 
 <body>
 
 <p> Login Below </p>
-<form id="loginForm" method="post" action="/login" onsubmit="updatePage(event);">
+<form id="form" method="post" action="/login" onsubmit="validate(event, '/login', '/hotelSearch');">
     Username: <br> <input type="text" name="username"> <br>
     Password: <br> <input type="password" name="password"> <br>
     <p> <input type="submit" value="Login"></p>

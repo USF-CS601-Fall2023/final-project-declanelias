@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
     <title>Register</title>
+    <script src="js/validate.js"></script>
 </head>
 
 <body>
 <p> Register Below </p>
-<form method="post" action="/login">
+<form id="form" method="post" action="/register" onsubmit="validate(event, '/register', '/login');">
     Enter Username: <br> <input type="text" name="username"> <br>
-    Enter Password: <br> <input type="password" name="passowrd"> <br>
+    Enter Password: <br> <input type="password" name="password"> <br>
     <p> <input type="submit" value="Register"></p>
 </form>
+<p id="messageFromServer" style="color:red"></p>
 </body>
