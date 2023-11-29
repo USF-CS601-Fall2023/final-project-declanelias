@@ -6,9 +6,11 @@
 
 <body>
 
-#if($name != "anonymous")
 <h5>Hello, $name! </h5>
-#end
+
+<form method="post" action="/logout">
+    <button type="submit">Logout</button>
+</form>
 
 <p>Hotels: </p>
 #foreach( $hotel in $hotels)

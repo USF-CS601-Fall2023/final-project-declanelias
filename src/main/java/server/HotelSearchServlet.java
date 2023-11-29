@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class HotelSearchServlet extends HttpServlet {
+public class HotelSearchServlet extends HttpServlet implements HotelServlet{
 
     VelocityEngine ve;
     VelocityContext context;
@@ -23,41 +23,20 @@ public class HotelSearchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
-        PrintWriter out = response.getWriter();
-
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
-
         ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         context = new VelocityContext();
 
-        Template template = ve.getTemplate("templates/hotelSearch.html");
-        context.put("name", username);
-
-        StringWriter writer = new StringWriter();
-        template.merge(context, writer);
-
-        out.println(writer);
+        doGetHelper(request, response, "templates/hotelSearch.html", ve, context);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
-        PrintWriter out = response.getWriter();
-
         String word = request.getParameter("word");
         word = word.toLowerCase();
         HotelData hotels = (HotelData) getServletContext().getAttribute("hotels");
 
-        Template template = ve.getTemplate("templates/hotelInfo.html");
         context.put("hotels", hotels.searchByWord(word));
-        StringWriter writer = new StringWriter();
-        template.merge(context, writer);
 
-        out.println(writer);
+        doGetHelper(request, response, "templates/hotelInfo.html", ve, context);
     }
 }

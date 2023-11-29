@@ -12,7 +12,7 @@ public final class HotelReview implements Comparable<HotelReview>, JsonInterface
     private int hotelId;
     private String reviewId;
     @SerializedName("ratingOverall")
-    private int averageRating;
+    private double averageRating;
     private String title;
     private String reviewText;
     private String userNickname;
@@ -26,7 +26,7 @@ public final class HotelReview implements Comparable<HotelReview>, JsonInterface
     private static int count = 0;
 
 
-    public HotelReview(int hotelId, String title, String reviewText, String userNickname, String submissionDate, int averageRating) {
+    public HotelReview(int hotelId, String title, String reviewText, String userNickname, String submissionDate, double averageRating) {
         this.hotelId = hotelId;
         this.title = title;
         this.reviewText = reviewText;
@@ -84,7 +84,7 @@ public final class HotelReview implements Comparable<HotelReview>, JsonInterface
         return userNickname;
     }
 
-    public int getAverageRating() {
+    public double getAverageRating() {
         return averageRating;
     }
 

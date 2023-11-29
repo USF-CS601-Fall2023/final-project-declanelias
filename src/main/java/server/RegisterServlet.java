@@ -17,15 +17,34 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
+/**
+ * Servlet to register a new user
+ */
 public class RegisterServlet extends HttpServlet implements AuthenticationServlet{
 
 
+    /**
+     * Handles get request to the server
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         doGetHelper(request, response, "templates/register.html", ve);
     }
 
+    /**
+     * Handles post request to the server
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<String> usernameAndPassword = getUserNameAndPassword(request);

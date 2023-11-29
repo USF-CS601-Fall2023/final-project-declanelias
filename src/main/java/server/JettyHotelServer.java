@@ -6,7 +6,6 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHandler;
 import org.apache.velocity.app.VelocityEngine;
 
 import java.util.Set;
@@ -24,11 +23,11 @@ public class JettyHotelServer {
 		Server server = new Server(PORT);
 
 		ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-		handler.addServlet( "server.RegisterServlet", "/register");
-		handler.addServlet("server.LoginServlet", "/login");
+		handler.addServlet( RegisterServlet.class, "/register");
+		handler.addServlet(LoginServlet.class, "/login");
 		handler.addServlet(HotelSearchServlet.class, "/hotelSearch");
-		handler.addServlet(HotelServlet.class, "/hotel");
-
+		handler.addServlet(HotelDisplayServlet.class, "/hotel");
+		handler.addServlet(LogoutServlet.class, "/logout");
 
 		// initialize Velocity
 		VelocityEngine velocity = new VelocityEngine();

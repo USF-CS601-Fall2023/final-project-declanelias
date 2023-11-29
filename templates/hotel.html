@@ -7,6 +7,9 @@
 <body>
 
 <h5>Hello, $name! </h5>
+<form method="post" action="/logout">
+    <button type="submit">Logout</button>
+</form>
 
 <p>
     Hotel: $hotel.hotelName <br>
@@ -22,19 +25,26 @@
     Submission Date: $review.submissionDate<br>
     $review.title <br>
     $review.reviewText <br>
+
+    #if ($name.equals($review.userNickname))
+        <form method="post" action="/edit-review">
+            <input type="hidden" name="reviewId" value="$review.id">
+            <button type="submit">Edit Review</button>
+        </form>
+        <form method="post" action="/delete-review">
+            <input type="hidden" name="reviewId" value="$review.id">
+            <button type="submit">Delete Review</button>
+        </form>
     #end
+
+#end
 
     <resource name="style1.css" type="download" location="style1.css"> </resource>
 
 <form method="post" action="/hotel">
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
-    <br>
-
-    <label for="review">Review:</label>
-    <textarea id="review" name="review" rows="4" required></textarea>
-    <br>
-
+    Title:   <br> <input type="text" id="title" name="title" required> <br>
+    Rating: <br> <input type="number" id="rating" name="rating" required min="0" max="5"> <br>
+    Review: <br> <textarea id="review" name="review" rows="4" required></textarea> <br>
     <input type="submit" value="Submit Review">
 </form>
 
