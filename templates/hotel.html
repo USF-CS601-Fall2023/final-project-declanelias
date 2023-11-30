@@ -2,6 +2,17 @@
 <html>
 <head>
     <title>$hotel.hotelName</title>
+    <style>
+        /* Style for the overlay */
+        .overlay {
+            display: none;
+        }
+
+        /* Style for the modal */
+        .modal {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,12 +38,41 @@
     $review.reviewText <br>
 
     #if ($name.equals($review.userNickname))
-        <form method="post" action="/edit-review">
+
+        <form id="editForm">
             <input type="hidden" name="reviewId" value="$review.id">
-            <button type="submit">Edit Review</button>
+            <input type="hidden" name="hotelId" value="$review.hotelId">
+            <button type="button" onclick="openModal()">Edit Review</button>
         </form>
-        <form method="post" action="/delete-review">
-            <input type="hidden" name="reviewId" value="$review.id">
+
+        <div id="overlay" class="overlay" onclick="closeModal()"></div>
+        <div id="myModal" class="modal">
+            <span onclick="closeModal()" style="cursor: pointer;">&times;</span>
+            <input type="text" name="editedReview" placeholder="Enter edited review">
+            <button type="button" onclick="submitForm()">Submit Edited Review</button>
+        </div>
+
+        <script>
+            function openModal() {
+                document.getElementById("overlay").style.display = "block";
+                document.getElementById("myModal").style.display = "block";
+            }
+
+            function closeModal() {
+                document.getElementById("overlay").style.display = "none";
+                document.getElementById("myModal").style.display = "none";
+            }
+
+            function submitForm() {
+                // Add your form submission logic here
+                document.querySelector('form').submit();
+            }
+        </script>
+
+
+        <form method="post" action="/deleteReview">
+            <input type="hidden" name="reviewId" value="$review.reviewId">
+            <input type="hidden" name="hotelId" value="$review.hotelId">
             <button type="submit">Delete Review</button>
         </form>
     #end

@@ -65,7 +65,6 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
                 Integer.parseInt(hotelId), title, text,
                 username, date, Double.parseDouble(rating));
 
-        System.out.println(review);
 
         reviews.addToIdMap(review);
         response.sendRedirect("/hotel?hotelId=" + hotelId);

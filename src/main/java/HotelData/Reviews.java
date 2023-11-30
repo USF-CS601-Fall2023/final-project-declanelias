@@ -32,6 +32,25 @@ public class Reviews {
     }
 
     /**
+     * Removes review from id map given hotelId and string id
+     * @param hotelId hotel id
+     * @param reviewId review id
+     */
+    public void removeFromIdMap(String hotelId, String reviewId) {
+
+        Set<HotelReview> set = idMap.get(Integer.parseInt(hotelId));
+        Iterator<HotelReview> iter = set.iterator();
+        while (iter.hasNext()) {
+            HotelReview hr = iter.next();
+            if (hr.getReviewId().equals(reviewId)) {
+                set.remove(hr);
+                System.out.println("removed: " + hr);
+                break;
+            }
+        }
+    }
+
+    /**
      * Constructs the idMap map with hotelId as key and set of reviews as value and
      * constructs wordMap Map that holds a word as the value and a set of
      * hotelReviews as the key
