@@ -13,7 +13,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * sets the review to what the user changed the title and text to
+ */
 public class EditReviewServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.sendRedirect("/login");
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,8 +32,5 @@ public class EditReviewServlet extends HttpServlet {
 
         Reviews reviews = (Reviews) getServletContext().getAttribute("reviews");
         reviews.editReview(hotelId, reviewId, text, title);
-
-
-
     }
 }

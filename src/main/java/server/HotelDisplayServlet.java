@@ -15,6 +15,9 @@ import java.io.StringWriter;
 import java.time.LocalDate;
 import java.util.Set;
 
+/**
+ * Displays the reviews for a hotel
+ */
 public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
 
     VelocityEngine ve;
@@ -22,6 +25,14 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
     Reviews reviews;
     String hotelId;
 
+    /**
+     * Handles get requests
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
@@ -40,6 +51,12 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
         doGetHelper(request, response, "templates/hotel.html", ve, context);
     }
 
+    /**
+     * calculates the average rating of the reviews
+     *
+     * @param reviews
+     * @return average rating
+     */
     private double calcAvgRating(Set<HotelReview> reviews) {
         return reviews
                 .stream()

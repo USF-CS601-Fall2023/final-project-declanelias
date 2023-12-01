@@ -82,6 +82,11 @@ public interface AuthenticationServlet {
         out.println(obj);
     }
 
+    /**
+     * Sends valid json to javascript if username and password are valid
+     *
+     * @param out PrintWriter
+     */
     default void sendValidJson(PrintWriter out) {
         JsonObject obj = new JsonObject();
         obj.addProperty("success", true);

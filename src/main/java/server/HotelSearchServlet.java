@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+/**
+ * Handles endpoint /hotelSearch which searches for a hotel given a keyword
+ */
 public class HotelSearchServlet extends HttpServlet implements HotelServlet{
 
     VelocityEngine ve;

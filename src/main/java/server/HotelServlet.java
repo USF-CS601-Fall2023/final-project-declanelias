@@ -11,8 +11,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+/**
+ * Interface for servlets that handle anything to do with hotels
+ */
 public interface HotelServlet {
 
+    /**
+     * Takes care of common code between hotel servlets
+     *
+     * @param request
+     * @param response
+     * @param htmlFile html file to be displayed
+     * @param ve velocity engine
+     * @param context context to get hotel data from
+     * @throws IOException
+     */
     default void doGetHelper(HttpServletRequest request, HttpServletResponse response, String htmlFile, VelocityEngine ve, VelocityContext context) throws IOException {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);

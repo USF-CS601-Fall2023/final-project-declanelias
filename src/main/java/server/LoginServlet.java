@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Modified from the example of Prof. Engle
+ * Logs in the user
  */
 @SuppressWarnings("serial")
 public class LoginServlet extends HttpServlet implements AuthenticationServlet{
