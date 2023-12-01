@@ -96,6 +96,13 @@ public final class HotelReview implements Comparable<HotelReview>, JsonInterface
         return title;
     }
 
+    public void setReviewText(String reviewText) {
+        this.reviewText = reviewText;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public JsonObject toJson() {
         JsonObject jsonObject = new JsonObject();

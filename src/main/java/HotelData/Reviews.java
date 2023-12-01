@@ -37,17 +37,27 @@ public class Reviews {
      * @param reviewId review id
      */
     public void removeFromIdMap(String hotelId, String reviewId) {
-
         Set<HotelReview> set = idMap.get(Integer.parseInt(hotelId));
+        HotelReview hr = getReview(set, reviewId);
+        set.remove(hr);
+    }
+
+    private HotelReview getReview(Set<HotelReview> set, String reviewId) {
         Iterator<HotelReview> iter = set.iterator();
         while (iter.hasNext()) {
             HotelReview hr = iter.next();
             if (hr.getReviewId().equals(reviewId)) {
-                set.remove(hr);
-                System.out.println("removed: " + hr);
-                break;
+                return hr;
             }
         }
+        return null;
+    }
+
+    public void editReview(String hotelId, String reviewId, String editedText, String title) {
+        Set<HotelReview> set = idMap.get(Integer.parseInt(hotelId));
+        HotelReview hr = getReview(set, reviewId);
+        hr.setReviewText(editedText);
+        hr.setTitle(title);
     }
 
     /**

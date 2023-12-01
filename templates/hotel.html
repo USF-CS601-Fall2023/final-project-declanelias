@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>$hotel.hotelName</title>
+    <script src="js/editAndDeleteReviews.js"></script>
     <style>
         /* Style for the overlay */
         .overlay {
@@ -34,13 +35,17 @@
 #foreach( $review in $reviews)
     <b>Review by $review.userNickname</b> <br>
     Submission Date: $review.submissionDate<br>
-    $review.title <br>
-    $review.reviewText <br>
+    <div id="reviewTitle_${review.reviewId}">
+        $review.title
+    </div> <br>
+    <div id="reviewText_${review.reviewId}">
+        $review.reviewText
+    </div> <br>
 
     #if ($name.equals($review.userNickname))
 
-        <form id="editForm">
-            <input type="hidden" name="reviewId" value="$review.id">
+        <form id="editForm" method="post" action="/editReview">
+            <input type="hidden" name="reviewId" value="$review.reviewId">
             <input type="hidden" name="hotelId" value="$review.hotelId">
             <button type="button" onclick="openModal()">Edit Review</button>
         </form>
@@ -48,26 +53,10 @@
         <div id="overlay" class="overlay" onclick="closeModal()"></div>
         <div id="myModal" class="modal">
             <span onclick="closeModal()" style="cursor: pointer;">&times;</span>
-            <input type="text" name="editedReview" placeholder="Enter edited review">
-            <button type="button" onclick="submitForm()">Submit Edited Review</button>
+            <input id="editedTitle" type="text" name="reviewTitle" value="$review.title">
+            <textarea id="editedReview" name="editedReview" rows="4" required>Hello!</textarea>
+            <button type="button" onclick="submitForm($review.reviewId, $review.hotelId)">Submit Edited Review</button>
         </div>
-
-        <script>
-            function openModal() {
-                document.getElementById("overlay").style.display = "block";
-                document.getElementById("myModal").style.display = "block";
-            }
-
-            function closeModal() {
-                document.getElementById("overlay").style.display = "none";
-                document.getElementById("myModal").style.display = "none";
-            }
-
-            function submitForm() {
-                // Add your form submission logic here
-                document.querySelector('form').submit();
-            }
-        </script>
 
 
         <form method="post" action="/deleteReview">

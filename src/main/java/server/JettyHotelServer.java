@@ -29,6 +29,7 @@ public class JettyHotelServer {
 		handler.addServlet(HotelDisplayServlet.class, "/hotel");
 		handler.addServlet(LogoutServlet.class, "/logout");
 		handler.addServlet(DeleteReviewServlet.class, "/deleteReview");
+		handler.addServlet(EditReviewServlet.class, "/editReview");
 
 		// initialize Velocity
 		VelocityEngine velocity = new VelocityEngine();
