@@ -1,81 +1,142 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>$hotel.hotelName</title>
-    <script src="js/editAndDeleteReviews.js"></script>
-    <style>
-        /* Style for the overlay */
-        .overlay {
-            display: none;
-        }
+    <head>
+        <title>$hotel.hotelName</title>
+        <script src="js/editAndDeleteReviews.js"></script>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                margin: 20px;
+                padding: 0;
+                background-color: #f2f2f2;
+            }
 
-        /* Style for the modal */
-        .modal {
-            display: none;
-        }
-    </style>
-</head>
+            header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-<body>
+            section {
+                max-width: 800px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
 
-<h5>Hello, $name! </h5>
-<form method="post" action="/logout">
-    <button type="submit">Logout</button>
-</form>
+            h1 {
+                color: #333;
+            }
 
-<p>
-    Hotel: $hotel.hotelName <br>
-    Id: $hotel.id <br>
-    Address: $hotel.address <br>
-    Average Rating: $avgRating <br>
-    Expedia: <a href="$expediaLink">$hotel.expediaLink</a> <br>
-</p>
+            h5 {
+                margin-bottom: 10px;
+            }
 
-<h1>Reviews:<br></h1>
-#foreach( $review in $reviews)
-    <b>Review by $review.userNickname</b> <br>
-    Submission Date: $review.submissionDate<br>
-    <div id="reviewTitle_${review.reviewId}">
-        $review.title
-    </div> <br>
-    <div id="reviewText_${review.reviewId}">
-        $review.reviewText
-    </div> <br>
+            p {
+                line-height: 1.5;
+            }
 
-    #if ($name.equals($review.userNickname))
+            .review {
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                padding: 10px;
+                background-color: #fff;
+            }
 
-        <form id="editForm" method="post" action="/editReview">
-            <input type="hidden" name="reviewId" value="$review.reviewId">
-            <input type="hidden" name="hotelId" value="$review.hotelId">
-            <button type="button" onclick="openModal()">Edit Review</button>
-        </form>
+            .review-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+            }
 
-        <div id="overlay" class="overlay" onclick="closeModal()"></div>
-        <div id="myModal" class="modal">
-            <span onclick="closeModal()" style="cursor: pointer;">&times;</span>
-            <input id="editedTitle" type="text" name="reviewTitle" value="$review.title">
-            <textarea id="editedReview" name="editedReview" rows="4" required>Hello!</textarea>
-            <button type="button" onclick="submitForm($review.reviewId, $review.hotelId)">Submit Edited Review</button>
-        </div>
+            .review-header span {
+                font-weight: bold;
+            }
+
+            .review-text {
+                color: #333;
+            }
+
+            .overlay {
+                display: none;
+            }
+
+            .modal {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <h1>$hotel.hotelName</h1>
+        </header>
+
+        <section>
+            <h5>Hello, $name! </h5>
+            <form method="post" action="/logout">
+                <button type="submit">Logout</button>
+            </form>
+
+            <p>
+                Hotel: $hotel.hotelName <br>
+                Id: $hotel.id <br>
+                Address: $hotel.address <br>
+                Average Rating: $avgRating <br>
+                Expedia: <a href="$expediaLink">$hotel.expediaLink</a> <br>
+            </p>
+
+            <h2>Reviews:</h2>
+
+            #foreach( $review in $reviews)
+                <div class="review">
+                    <div class="reviewHeader">
+                        <span>Review by $review.userNickname</span>
+                        <span>Submission Date: $review.submissionDate</span>
+                    </div>
+                    <div id="reviewTitle_${review.reviewId}">
+                        <h3>$review.title</h3>
+                    </div>
+                    <div id="reviewText_${review.reviewId}">
+                        $review.reviewText
+                    </div>
+
+                    #if ($name.equals($review.userNickname))
+
+                    <form id="editForm" method="post" action="/editReview">
+                        <input type="hidden" name="reviewId" value="$review.reviewId">
+                        <input type="hidden" name="hotelId" value="$review.hotelId">
+                        <button type="button" onclick="openModal()">Edit Review</button>
+                    </form>
+
+                    <div id="overlay" class="overlay" onclick="closeModal()"></div>
+                    <div id="myModal" class="modal">
+                        <span onclick="closeModal()" style="cursor: pointer;">&times;</span>
+                        New Title: <br> <input id="editedTitle" type="text" name="reviewTitle" value="$review.title"> <br>
+                        New Review: <br> <textarea id="editedReview" name="editedReview" rows="4" required>Hello!</textarea> <br>
+                        <button type="button" onclick="submitForm($review.reviewId, $review.hotelId)">Submit Edited Review</button>
+                    </div>
 
 
-        <form method="post" action="/deleteReview">
-            <input type="hidden" name="reviewId" value="$review.reviewId">
-            <input type="hidden" name="hotelId" value="$review.hotelId">
-            <button type="submit">Delete Review</button>
-        </form>
-    #end
+                    <form method="post" action="/deleteReview">
+                        <input type="hidden" name="reviewId" value="$review.reviewId">
+                        <input type="hidden" name="hotelId" value="$review.hotelId">
+                        <button type="submit">Delete Review</button>
+                    </form>
+                    #end
+                </div>
 
-#end
+            #end
 
-    <resource name="style1.css" type="download" location="style1.css"> </resource>
+            <h2>Add a Review</h2>
+            <form method="post" action="/hotel">
+                Title:   <br> <input type="text" id="title" name="title" required> <br>
+                Rating: <br> <input type="number" id="rating" name="rating" required min="0" max="5"> <br>
+                Review: <br> <textarea id="review" name="review" rows="4" required></textarea> <br>
+                <input type="submit" value="Submit Review">
+            </form>
+        </section>
 
-<form method="post" action="/hotel">
-    Title:   <br> <input type="text" id="title" name="title" required> <br>
-    Rating: <br> <input type="number" id="rating" name="rating" required min="0" max="5"> <br>
-    Review: <br> <textarea id="review" name="review" rows="4" required></textarea> <br>
-    <input type="submit" value="Submit Review">
-</form>
-
-</body>
+    </body>
 </html>

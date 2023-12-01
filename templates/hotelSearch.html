@@ -1,16 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 
 <body>
-<p> Hello, $name! </p>
+<p>Hello, $name!</p>
+
 <form method="post" action="/logout">
     <button type="submit">Logout</button>
 </form>
+
 <form method="post" action="/hotelSearch">
-    Search for hotel: <br> <input type="text" name="word"> <br>
-    <p> <input type="submit" value="Search"></p>
+    <p>Search for hotel:</p>
+    <input type="text" name="word">
+    <p><input type="submit" value="Search"></p>
 </form>
 </body>
+
+</html>

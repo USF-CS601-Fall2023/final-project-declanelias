@@ -30,8 +30,8 @@ function submitForm(reviewId, hotelId) {
     .then(response => {
         console.log('Response:', response);
         closeModal();
-        document.getElementById("reviewText_" + reviewId).innerHTML = editedReview;
-        document.getElementById("reviewTitle_" + reviewId).innerHTML = editedTitle;
+        document.getElementById("reviewText_" + reviewId).innerHTML = editedReview ;
+        document.getElementById("reviewTitle_" + reviewId).innerHTML = "<h3>" + editedTitle + "</h3>";
     })
     .catch(error => {
         // Handle errors
