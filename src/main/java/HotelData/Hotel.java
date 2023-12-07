@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Stores information of hotel read in from json
  */
-public final class Hotel implements JsonInterface{
+public final class Hotel implements JsonInterface, Comparable<Hotel>{
 
     @SerializedName("f")
     private String hotelName;
@@ -116,5 +116,10 @@ public final class Hotel implements JsonInterface{
 
     public void setExpediaLink(String expediaLink) {
         this.expediaLink = expediaLink;
+    }
+
+    @Override
+    public int compareTo(Hotel o) {
+        return this.hotelName.compareTo(o.hotelName);
     }
 }

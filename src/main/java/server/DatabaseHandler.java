@@ -7,10 +7,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  *
@@ -274,7 +271,7 @@ public class DatabaseHandler {
 
     public Set<HotelReview> getReviews(String hotelId) {
         PreparedStatement sql;
-        Set<HotelReview> reviews = new HashSet<HotelReview>();
+        Set<HotelReview> reviews = new TreeSet<>();
         try (Connection dbConnection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
 
 
@@ -323,7 +320,7 @@ public class DatabaseHandler {
 
     public Set<Hotel> getHotelsByKeyword(String word) {
         PreparedStatement sql;
-        Set<Hotel> hotels = new HashSet<>();
+        Set<Hotel> hotels = new TreeSet<>();
 
         try (Connection dbConnection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
 
