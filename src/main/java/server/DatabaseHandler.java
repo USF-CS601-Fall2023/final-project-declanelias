@@ -367,6 +367,52 @@ public class DatabaseHandler {
         return hotel;
     }
 
+
+    public void updateReview(String hotelId, String reviewId, String title, String text) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            try {
+                statement = connection.prepareStatement(PreparedStatements.UPDATE_REVIEW);
+                statement.setString(1, title);
+                statement.setString(2, text);
+                statement.setString(3, hotelId);
+                statement.setString(4, reviewId);
+
+
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void deleteReview(String hotelId, String reviewId, String username) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            try {
+                statement = connection.prepareStatement(PreparedStatements.DELETE_REVIEW);
+                statement.setString(1, hotelId);
+                statement.setString(2, reviewId);
+                statement.setString(3, username);
+
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+
     public static void main(String[] args) throws SQLException {
 //        DatabaseHandler dbhandler = DatabaseHandler.getInstance();
 //        dbHandler.createUserTable();

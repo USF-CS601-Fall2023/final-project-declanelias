@@ -70,4 +70,13 @@ public class PreparedStatements {
     public static final String GET_HOTELS_WITH_KEYWORD =
             "SELECT * FROM hotels " +
                     "WHERE hotelName LIKE CONCAT('%', ?, '%')";
+
+    public static final String UPDATE_REVIEW =
+            "UPDATE reviews " +
+                    "SET title = (?), reviewText = (?) " +
+                    "WHERE hotelId = (?) AND reviewId = (?);";
+
+    public static final String DELETE_REVIEW =
+            "DELETE FROM reviews " +
+                    "WHERE hotelId = (?) AND reviewId = (?) AND userNickname = (?);";
 }

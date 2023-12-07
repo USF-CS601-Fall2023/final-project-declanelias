@@ -25,6 +25,7 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
     VelocityEngine ve;
     VelocityContext context;
     String hotelId;
+    DatabaseHandler dbHandler = DatabaseHandler.getInstance();
 
     /**
      * Handles get requests
@@ -41,7 +42,6 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
 
         hotelId = request.getParameter("hotelId");
 
-        DatabaseHandler dbHandler = DatabaseHandler.getInstance();
         Set<HotelReview> hotelReviewSet = dbHandler.getReviews(hotelId);
         Hotel hotel = dbHandler.getHotel(hotelId);
 
@@ -84,9 +84,7 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
                 username, date, Double.parseDouble(rating));
 
 
-        // TODO add to database
-//        reviews.addToIdMap(review);
+        dbHandler.addReview(review);
         response.sendRedirect("/hotel?hotelId=" + hotelId);
-
     }
 }

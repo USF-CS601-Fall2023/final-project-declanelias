@@ -1,11 +1,13 @@
 package server;
 
 import HotelData.Reviews;
+import org.eclipse.jetty.server.session.Session;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -23,8 +25,16 @@ public class DeleteReviewServlet extends HttpServlet {
         String reviewId = request.getParameter("reviewId");
         String hotelId = request.getParameter("hotelId");
 
-        Reviews reviews = (Reviews) getServletContext().getAttribute("reviews");
-        reviews.removeFromIdMap(hotelId, reviewId);
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+
+        if (username.isEmpty()) {
+            response.sendRedirect("/login");
+        }
+        DatabaseHandler
+                .getInstance()
+                .deleteReview(hotelId, reviewId, username);
+
         response.sendRedirect("/hotel?hotelId=" + hotelId);
     }
 

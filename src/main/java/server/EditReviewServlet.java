@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,7 +31,15 @@ public class EditReviewServlet extends HttpServlet {
         String text = request.getParameter("editedReview");
         String title = request.getParameter("editedTitle");
 
-        Reviews reviews = (Reviews) getServletContext().getAttribute("reviews");
-        reviews.editReview(hotelId, reviewId, text, title);
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+
+        if (username.isEmpty()) {
+            response.sendRedirect("/login");
+        }
+
+        DatabaseHandler
+                .getInstance()
+                .updateReview(hotelId, reviewId, title, text);
     }
 }
