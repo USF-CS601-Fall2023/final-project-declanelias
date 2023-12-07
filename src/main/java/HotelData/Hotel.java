@@ -65,4 +65,24 @@ public final class Hotel implements JsonInterface{
     public String getAddress() {
         return address + ", " + city + ", " + state;
     }
+
+    public double getLat() {
+        return Double.parseDouble(ll.getLat());
+    }
+
+    public double getLng() {
+        return Double.parseDouble(ll.getLng());
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
 }

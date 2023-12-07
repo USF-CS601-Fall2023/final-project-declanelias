@@ -10,7 +10,33 @@ public class PreparedStatements {
                     "password CHAR(64) NOT NULL, " +
                     "usersalt CHAR(32) NOT NULL);";
 
-    public static final String CREATE_HOTEL_TABLE = "asas";
+    public static final String CREATE_REVIEW_TABLE =
+            "CREATE TABLE reviews (" +
+                    "hotelId VARCHAR(10) NOT NULL, " +
+                    "reviewId VARCHAR(10) NOT NULL, " +
+                    "averageRating DOUBLE NOT NULL, " +
+                    "title VARCHAR(255) NOT NULL, " +
+                    "reviewText VARCHAR(255) NOT NULL, " +
+                    "userNickname VARCHAR(255) NOT NULL, " +
+                    "submissionDate VARCHAR(255) NOT NULL);";
+
+    public static final String CREATE_HOTEL_TABLE =
+            "CREATE TABLE hotels (" +
+                    "hotelId VARCHAR(10) PRIMARY KEY, " +
+                    "address VARCHAR(255) NOT NULL, " +
+                    "hotelName VARCHAR(255) NOT NULL, " +
+                    "lat DOUBLE NOT NULL," +
+                    "lng DOUBLE NOT NULL," +
+                    "city VARCHAR(255) NOT NULL," +
+                    "state VARCHAR(255) NOT NULL," +
+                    "country VARCHAR(255) NOT NULL," +
+                    "expediaLink VARCHAR(255) NOT NULL);";
+
+    public static final String INSERT_HOTEL =
+            "INSERT INTO hotels " +
+                    "(hotelId, address, hotelName, lat, lng, city, state, country, expediaLink)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 
     /** Used to insert a new user into the database. */
     public static final String REGISTER_SQL =
@@ -29,4 +55,5 @@ public class PreparedStatements {
     public static final String CHECK_USERNAME_SQL =
             "SELECT username FROM users " +
                     "WHERE username = ?";
+
 }

@@ -1,5 +1,7 @@
 package server;
 
+import HotelData.*;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -7,6 +9,7 @@ import java.security.MessageDigest;
 import java.sql.*;
 import java.util.Properties;
 import java.util.Random;
+import java.util.Set;
 
 /**
  *
@@ -51,17 +54,30 @@ public class DatabaseHandler {
         return config;
     }
 
-    public void createTable() {
+    private void createTable(String preparedStatement) {
         Statement statement;
         try (Connection dbConnection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
             System.out.println("dbConnection successful");
             statement = dbConnection.createStatement();
-            statement.executeUpdate(PreparedStatements.CREATE_USER_TABLE);
+            statement.executeUpdate(preparedStatement);
         }
         catch (SQLException ex) {
             System.out.println(ex);
         }
     }
+
+    public void createUserTable() {
+        createTable(PreparedStatements.CREATE_USER_TABLE);
+    }
+
+    public void createHotelTable() {
+        createTable(PreparedStatements.CREATE_HOTEL_TABLE);
+    }
+
+    public void createReviewTable() {
+        createTable(PreparedStatements.CREATE_REVIEW_TABLE);
+    }
+
 
 
     /**
@@ -199,12 +215,67 @@ public class DatabaseHandler {
         return salt;
     }
 
-    public static void main(String[] args) {
-        DatabaseHandler dhandler = DatabaseHandler.getInstance();
-        dhandler.createTable();
-        System.out.println("created a user table ");
-        dhandler.registerUser("luke", "lukeS1k23w");
-        System.out.println("Registered luke.");
+
+
+    public void addHotel(Hotel hotel) {
+
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            try {
+                System.out.println("Added hotel " + hotel.getHotelName());
+                statement = connection.prepareStatement(PreparedStatements.INSERT_HOTEL);
+                statement.setString(1, hotel.getId());
+                statement.setString(2, hotel.getHotelName());
+                statement.setString(3, hotel.getAddress());
+                statement.setDouble(4, hotel.getLat());
+                statement.setDouble(5, hotel.getLng());
+                statement.setString(6, hotel.getCity());
+                statement.setString(7, hotel.getState());
+                statement.setString(8, hotel.getCountry());
+                statement.setString(9, hotel.getExpediaLink());
+
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
+
+    public void addReview(HotelReview review) {
+
+    }
+
+    public static void main(String[] args) {
+        DatabaseHandler dbhandler = DatabaseHandler.getInstance();
+//        dbHandler.createUserTable();
+        dbhandler.createHotelTable();
+//        dbhandler.createReviewTable();
+        loadHotelInfo(args);
+    }
+
+    private static void loadHotelInfo(String[] args) {
+        ThreadSafeHotels hotels = new ThreadSafeHotels();
+        ThreadSafeReviews reviews = new ThreadSafeReviews(Set.of("a", "the", "is", "are", "were", "and"));
+
+        CommandLineParser cp = new CommandLineParser();
+        cp.parse(args, Set.of("hotels", "reviews", "threads"));
+
+        String hotelPath = cp.getArg("hotels");
+        String reviewPath = cp.getArg("reviews");
+        String numThreads = cp.getArg("threads");
+
+        FileParser fp = new FileParser(Integer.parseInt(numThreads), true);
+        fp.addHotels(hotelPath, hotels);
+        fp.addReviews(reviewPath, reviews);
+
+        hotels.addToDb();
+//        reviews.addToDb();
+    }
+
 }
 

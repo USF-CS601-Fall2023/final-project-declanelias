@@ -67,6 +67,7 @@ public class RegisterServlet extends HttpServlet implements AuthenticationServle
         } else if (usernameExists) {
             sendInvalidJson("Username taken", out);
         } else {
+            dbHandler.registerUser(user, password);
             sendValidJson(out);
         }
     }

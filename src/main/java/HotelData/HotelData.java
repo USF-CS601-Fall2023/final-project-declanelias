@@ -1,5 +1,7 @@
 package HotelData;
 
+import server.DatabaseHandler;
+
 import java.util.*;
 
 /**
@@ -73,5 +75,13 @@ public class HotelData {
             return null;
         }
         return hotelMap.get(id);
+    }
+
+
+    public void addToDb() {
+        DatabaseHandler dbhandler = DatabaseHandler.getInstance();
+        for (Hotel hotel : hotelMap.values()) {
+            dbhandler.addHotel(hotel);
+        }
     }
 }

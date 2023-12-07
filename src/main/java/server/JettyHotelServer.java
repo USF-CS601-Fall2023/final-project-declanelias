@@ -22,7 +22,6 @@ public class JettyHotelServer {
 	private static HandlerList handlers;
 
 	public static void main(String[] args) throws Exception {
-		loadHotelInfo(args);
 		initVelocity();
 		createHandler();
 		startServer();
@@ -60,22 +59,5 @@ public class JettyHotelServer {
 
 		handlers = new HandlerList();
 		handlers.setHandlers(new Handler[] { resourceHandler, handler });
-	}
-
-
-	private static void loadHotelInfo(String[] args) {
-		hotels = new ThreadSafeHotels();
-		reviews = new ThreadSafeReviews(Set.of("a", "the", "is", "are", "were", "and"));
-
-		CommandLineParser cp = new CommandLineParser();
-		cp.parse(args, Set.of("hotels", "reviews", "threads"));
-
-		String hotelPath = cp.getArg("hotels");
-		String reviewPath = cp.getArg("reviews");
-		String numThreads = cp.getArg("threads");
-
-		FileParser fp = new FileParser(Integer.parseInt(numThreads), true);
-		fp.addHotels(hotelPath, hotels);
-		fp.addReviews(reviewPath, reviews);
 	}
 }
