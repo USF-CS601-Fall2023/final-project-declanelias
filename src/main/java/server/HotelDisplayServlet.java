@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,7 +24,6 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
 
     VelocityEngine ve;
     VelocityContext context;
-    Reviews reviews;
     String hotelId;
 
     /**
@@ -39,13 +40,13 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
         context = new VelocityContext();
 
         hotelId = request.getParameter("hotelId");
-        reviews = (Reviews) getServletContext().getAttribute("reviews");
-        Set<HotelReview> hotelReviewSet = reviews.searchByID(Integer.parseInt(hotelId));
+
+        DatabaseHandler dbHandler = DatabaseHandler.getInstance();
+        Set<HotelReview> hotelReviewSet = dbHandler.getReviews(hotelId);
+        Hotel hotel = dbHandler.getHotel(hotelId);
+
         context.put("reviews", hotelReviewSet);
         context.put("avgRating", calcAvgRating(hotelReviewSet));
-
-        HotelData hotelData = (HotelData) getServletContext().getAttribute("hotels");
-        Hotel hotel = hotelData.searchByID(hotelId);
         context.put("hotel", hotel);
 
         doGetHelper(request, response, "templates/hotel.html", ve, context);
@@ -83,7 +84,8 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
                 username, date, Double.parseDouble(rating));
 
 
-        reviews.addToIdMap(review);
+        // TODO add to database
+//        reviews.addToIdMap(review);
         response.sendRedirect("/hotel?hotelId=" + hotelId);
 
     }

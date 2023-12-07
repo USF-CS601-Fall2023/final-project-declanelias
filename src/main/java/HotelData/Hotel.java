@@ -85,4 +85,36 @@ public final class Hotel implements JsonInterface{
     public String getCountry() {
         return country;
     }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setCoords(String lat, String lng) {
+        this.ll = new Coordinates(lat, lng);
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setExpediaLink(String expediaLink) {
+        this.expediaLink = expediaLink;
+    }
 }

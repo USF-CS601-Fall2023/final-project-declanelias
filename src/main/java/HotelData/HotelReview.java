@@ -38,6 +38,16 @@ public final class HotelReview implements Comparable<HotelReview>, JsonInterface
         count--;
     }
 
+    public HotelReview(int hotelId, String title, String reviewText, String userNickname, String submissionDate, double averageRating, String reviewId) {
+        this.hotelId = hotelId;
+        this.title = title;
+        this.reviewText = reviewText;
+        this.userNickname = userNickname;
+        this.submissionDate = submissionDate;
+        this.averageRating = averageRating;
+        this.reviewId = reviewId;
+    }
+
     @Override
     public String toString() {
         return "hotelId = " + hotelId + '\n' +

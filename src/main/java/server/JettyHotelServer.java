@@ -16,8 +16,6 @@ import java.util.Set;
 public class JettyHotelServer {
 	public static final int PORT = 8080;
 
-	private static HotelData hotels;
-	private static Reviews reviews;
 	private static VelocityEngine velocity;
 	private static HandlerList handlers;
 
@@ -54,8 +52,6 @@ public class JettyHotelServer {
 		handler.addServlet(LoginServlet.class, "/*");
 
 		handler.setAttribute("templateEngine", velocity);
-		handler.setAttribute("hotels", hotels);
-		handler.setAttribute("reviews", reviews);
 
 		handlers = new HandlerList();
 		handlers.setHandlers(new Handler[] { resourceHandler, handler });

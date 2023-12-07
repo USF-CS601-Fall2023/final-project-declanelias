@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.*;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -247,15 +248,134 @@ public class DatabaseHandler {
     }
 
     public void addReview(HotelReview review) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            try {
+                statement = connection.prepareStatement(PreparedStatements.INSERT_REVIEW);
+                statement.setString(1, Integer.toString(review.getHotelId()));
+                statement.setString(2, review.getReviewId());
+                statement.setDouble(3, review.getAverageRating());
+                statement.setString(4, review.getTitle());
+                statement.setString(5, review.getReviewText());
+                statement.setString(6, review.getUserNickname());
+                statement.setString(7, review.getSubmissionDate().toString());
+
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public Set<HotelReview> getReviews(String hotelId) {
+        PreparedStatement sql;
+        Set<HotelReview> reviews = new HashSet<HotelReview>();
+        try (Connection dbConnection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+
+
+            sql = dbConnection.prepareStatement(PreparedStatements.GET_REVIEWS_FROM_ID);
+            sql.setString(1, hotelId);
+
+            ResultSet result = sql.executeQuery();
+            while(result.next()) {
+                String reviewId = result.getString(2);
+                double averageRating = result.getDouble(3);
+                String title = result.getString(4);
+                String text = result.getString(5);
+                String username = result.getString(6);
+                String date = result.getString(7);
+
+                HotelReview review = new HotelReview(Integer.parseInt(hotelId), title, text, username, date, averageRating, reviewId);
+                reviews.add(review);
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return reviews;
+    }
+
+
+    public Hotel getHotel(String hotelId){
+        PreparedStatement sql;
+        try (Connection dbConnection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            sql = dbConnection.prepareStatement(PreparedStatements.GET_HOTEL_FROM_ID);
+            sql.setString(1, hotelId);
+
+            ResultSet result = sql.executeQuery();
+            result.next();
+
+            return createHotel(result);
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return null;
 
     }
 
-    public static void main(String[] args) {
-        DatabaseHandler dbhandler = DatabaseHandler.getInstance();
+    public Set<Hotel> getHotelsByKeyword(String word) {
+        PreparedStatement sql;
+        Set<Hotel> hotels = new HashSet<>();
+
+        try (Connection dbConnection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+
+
+            sql = dbConnection.prepareStatement(PreparedStatements.GET_HOTELS_WITH_KEYWORD);
+            sql.setString(1, word);
+
+            ResultSet result = sql.executeQuery();
+            while(result.next()) {
+               hotels.add(createHotel(result));
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return hotels;
+    }
+
+    private Hotel createHotel(ResultSet result) throws SQLException {
+        String hotelId = result.getString(1);
+        String hotelName = result.getString(2);
+        String address = result.getString(3);
+        double lat = result.getDouble(4);
+        double lng = result.getDouble(5);
+        String city = result.getString(6);
+        String state = result.getString(7);
+        String country = result.getString(8);
+        String link = result.getString(9);
+
+        Hotel hotel = new Hotel();
+        hotel.setId(hotelId);
+        hotel.setHotelName(hotelName);
+        hotel.setAddress(address);
+        hotel.setCoords(Double.toString(lat), Double.toString(lng));
+        hotel.setCity(city);
+        hotel.setState(state);
+        hotel.setCountry(country);
+        hotel.setExpediaLink(link);
+
+        return hotel;
+    }
+
+    public static void main(String[] args) throws SQLException {
+//        DatabaseHandler dbhandler = DatabaseHandler.getInstance();
 //        dbHandler.createUserTable();
-        dbhandler.createHotelTable();
+//        dbhandler.createHotelTable();
 //        dbhandler.createReviewTable();
-        loadHotelInfo(args);
+//        loadHotelInfo(args);
+
+        Set<Hotel> review = dbHandler.getHotelsByKeyword("");
+        System.out.println(review);
     }
 
     private static void loadHotelInfo(String[] args) {
@@ -274,7 +394,7 @@ public class DatabaseHandler {
         fp.addReviews(reviewPath, reviews);
 
         hotels.addToDb();
-//        reviews.addToDb();
+        reviews.addToDb();
     }
 
 }

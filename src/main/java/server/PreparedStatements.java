@@ -13,10 +13,10 @@ public class PreparedStatements {
     public static final String CREATE_REVIEW_TABLE =
             "CREATE TABLE reviews (" +
                     "hotelId VARCHAR(10) NOT NULL, " +
-                    "reviewId VARCHAR(10) NOT NULL, " +
+                    "reviewId VARCHAR(25) NOT NULL, " +
                     "averageRating DOUBLE NOT NULL, " +
                     "title VARCHAR(255) NOT NULL, " +
-                    "reviewText VARCHAR(255) NOT NULL, " +
+                    "reviewText TEXT NOT NULL, " +
                     "userNickname VARCHAR(255) NOT NULL, " +
                     "submissionDate VARCHAR(255) NOT NULL);";
 
@@ -25,17 +25,22 @@ public class PreparedStatements {
                     "hotelId VARCHAR(10) PRIMARY KEY, " +
                     "address VARCHAR(255) NOT NULL, " +
                     "hotelName VARCHAR(255) NOT NULL, " +
-                    "lat DOUBLE NOT NULL," +
-                    "lng DOUBLE NOT NULL," +
-                    "city VARCHAR(255) NOT NULL," +
-                    "state VARCHAR(255) NOT NULL," +
-                    "country VARCHAR(255) NOT NULL," +
+                    "lat DOUBLE NOT NULL, " +
+                    "lng DOUBLE NOT NULL, " +
+                    "city VARCHAR(255) NOT NULL, " +
+                    "state VARCHAR(255) NOT NULL, " +
+                    "country VARCHAR(255) NOT NULL, " +
                     "expediaLink VARCHAR(255) NOT NULL);";
 
     public static final String INSERT_HOTEL =
             "INSERT INTO hotels " +
-                    "(hotelId, address, hotelName, lat, lng, city, state, country, expediaLink)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "(hotelId, address, hotelName, lat, lng, city, state, country, expediaLink) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+    public static final String INSERT_REVIEW =
+            "INSERT INTO reviews " +
+                    "(hotelId, reviewId, averageRating, title, reviewText, userNickname, submissionDate)" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
 
     /** Used to insert a new user into the database. */
@@ -56,4 +61,13 @@ public class PreparedStatements {
             "SELECT username FROM users " +
                     "WHERE username = ?";
 
+    public static final String GET_HOTEL_FROM_ID =
+            "SELECT * FROM hotels WHERE hotelId=(?)";
+
+    public static final String GET_REVIEWS_FROM_ID =
+            "SELECT * FROM reviews WHERE hotelId=(?)";
+
+    public static final String GET_HOTELS_WITH_KEYWORD =
+            "SELECT * FROM hotels " +
+                    "WHERE hotelName LIKE CONCAT('%', ?, '%')";
 }

@@ -1,5 +1,7 @@
 package HotelData;
 
+import server.DatabaseHandler;
+
 import java.util.*;
 
 /**
@@ -149,5 +151,15 @@ public class Reviews {
             return null;
         }
         return Collections.unmodifiableSet(wordMap.get(word));
+    }
+
+
+    public void addToDb() {
+        DatabaseHandler dbHandler = DatabaseHandler.getInstance();
+        idMap
+            .values()
+            .stream()
+            .flatMap(TreeSet::stream)
+            .forEach(dbHandler::addReview);
     }
 }

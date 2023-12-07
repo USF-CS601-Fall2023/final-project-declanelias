@@ -36,9 +36,10 @@ public class HotelSearchServlet extends HttpServlet implements HotelServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String word = request.getParameter("word");
         word = word.toLowerCase();
-        HotelData hotels = (HotelData) getServletContext().getAttribute("hotels");
 
-        context.put("hotels", hotels.searchByWord(word));
+        DatabaseHandler dbHandler = DatabaseHandler.getInstance();
+
+        context.put("hotels", dbHandler.getHotelsByKeyword(word));
 
         doGetHelper(request, response, "templates/hotelInfo.html", ve, context);
     }
