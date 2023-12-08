@@ -409,16 +409,42 @@ public class DatabaseHandler {
         }
     }
 
+    public void addLinkToHistory(String username, String link) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            try {
+                statement = connection.prepareStatement(PreparedStatements.INSERT_LINK);
+                statement.setString(1, username);
+                statement.setString(2, link);
+
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void createLinkHistoryTable() {
+        createTable(PreparedStatements.CREATE_LINK_HISTORY_TABLE);
+    }
+
 
     public static void main(String[] args) throws SQLException {
 //        DatabaseHandler dbhandler = DatabaseHandler.getInstance();
 //        dbHandler.createUserTable();
 //        dbhandler.createHotelTable();
 //        dbhandler.createReviewTable();
+        dbHandler.createLinkHistoryTable();
+
 //        loadHotelInfo(args);
 
-        Set<Hotel> review = dbHandler.getHotelsByKeyword("");
-        System.out.println(review);
+//        Set<Hotel> review = dbHandler.getHotelsByKeyword("");
+//        System.out.println(review);
     }
 
     private static void loadHotelInfo(String[] args) {

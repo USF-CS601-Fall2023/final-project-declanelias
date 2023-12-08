@@ -1,14 +1,11 @@
 package server;
 
-import HotelData.*;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.apache.velocity.app.VelocityEngine;
-
-import java.util.Set;
 
 /**
  * Main class that runs the jetty server
@@ -49,6 +46,7 @@ public class JettyHotelServer {
 		handler.addServlet(LogoutServlet.class, "/logout");
 		handler.addServlet(DeleteReviewServlet.class, "/deleteReview");
 		handler.addServlet(EditReviewServlet.class, "/editReview");
+		handler.addServlet(SaveLink.class, "/saveLink");
 		handler.addServlet(LoginServlet.class, "/*");
 
 		handler.setAttribute("templateEngine", velocity);

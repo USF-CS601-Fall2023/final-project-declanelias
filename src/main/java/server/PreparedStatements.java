@@ -10,6 +10,11 @@ public class PreparedStatements {
                     "password CHAR(64) NOT NULL, " +
                     "usersalt CHAR(32) NOT NULL);";
 
+    public static final String CREATE_LINK_HISTORY_TABLE =
+            "CREATE TABLE linkhistory (" +
+                    "username VARCHAR(32) NOT NULL, " +
+                    "expediaLink VARCHAR(255) NOT NULL);";
+
     public static final String CREATE_REVIEW_TABLE =
             "CREATE TABLE reviews (" +
                     "hotelId VARCHAR(10) NOT NULL, " +
@@ -31,6 +36,11 @@ public class PreparedStatements {
                     "state VARCHAR(255) NOT NULL, " +
                     "country VARCHAR(255) NOT NULL, " +
                     "expediaLink VARCHAR(255) NOT NULL);";
+
+    public static final String INSERT_LINK =
+            "INSERT INTO linkhistory " +
+                    "(username, expediaLink) " +
+                    "VALUES (?, ?)";
 
     public static final String INSERT_HOTEL =
             "INSERT INTO hotels " +

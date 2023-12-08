@@ -3,6 +3,9 @@
     <head>
         <title>$hotel.hotelName</title>
         <script src="js/editAndDeleteReviews.js"></script>
+        <script src="js/saveLink.js"></script>
+        <script src="js/loadWeather.js"></script>
+
         <style>
             body {
                 font-family: 'Arial', sans-serif;
@@ -84,7 +87,11 @@
                 Id: $hotel.id <br>
                 Address: $hotel.address <br>
                 Average Rating: $avgRating <br>
-                Expedia: <a href="$expediaLink">$hotel.expediaLink</a> <br>
+                Expedia: <a href="$hotel.expediaLink" onclick="saveLink('$hotel.expediaLink')">$hotel.expediaLink</a> <br>
+            </p>
+            <p id="weather">
+                Weather: Loading weather...
+                <script>loadWeather($hotel.lat, $hotel.lng)</script>
             </p>
 
             <h2>Reviews:</h2>
