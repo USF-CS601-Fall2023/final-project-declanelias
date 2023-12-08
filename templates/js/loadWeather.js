@@ -7,8 +7,10 @@ function loadWeather(lat, lng) {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     })
-    .then(response => {
-        console.log('Response:', response);
+    .then(res => res.json())
+    .then(data => {
+        let str = "Temperature: " + data.temperature + "ºC<br> Windspeed: " + data.windspeed + " MPH";
+        document.getElementById("weather").innerHTML = str;
     })
     .catch(error => {
             console.error('Error:', error);

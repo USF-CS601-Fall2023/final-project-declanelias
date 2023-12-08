@@ -1,6 +1,6 @@
 package HotelData;
 
-import server.DatabaseHandler;
+import server.Database.DatabaseHandler;
 
 import java.util.*;
 

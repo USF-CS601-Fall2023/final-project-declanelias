@@ -5,7 +5,7 @@
         <script src="js/editAndDeleteReviews.js"></script>
         <script src="js/saveLink.js"></script>
         <script src="js/loadWeather.js"></script>
-
+        <script src="js/favoriteHotels.js"></script>
         <style>
             body {
                 font-family: 'Arial', sans-serif;
@@ -81,18 +81,19 @@
             <form method="post" action="/logout">
                 <button type="submit">Logout</button>
             </form>
+            <button onclick="favoriteHotel($hotel.id)">Favorite</button>
 
             <p>
                 Hotel: $hotel.hotelName <br>
                 Id: $hotel.id <br>
                 Address: $hotel.address <br>
                 Average Rating: $avgRating <br>
-                Expedia: <a href="$hotel.expediaLink" onclick="saveLink('$hotel.expediaLink')">$hotel.expediaLink</a> <br>
+                Expedia: <a href="$hotel.expediaLink" onclick="saveLink('$hotel.expediaLink')">$hotel.expediaLink</a>
             </p>
             <p id="weather">
-                Weather: Loading weather...
-                <script>loadWeather($hotel.lat, $hotel.lng)</script>
+                Loading weather...
             </p>
+            <script>loadWeather($hotel.lat, $hotel.lng)</script>
 
             <h2>Reviews:</h2>
 

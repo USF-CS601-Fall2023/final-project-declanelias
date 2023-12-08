@@ -1,4 +1,4 @@
-package server;
+package server.Database;
 
 public class PreparedStatements {
     /** Prepared Statements  */
@@ -25,6 +25,13 @@ public class PreparedStatements {
                     "userNickname VARCHAR(255) NOT NULL, " +
                     "submissionDate VARCHAR(255) NOT NULL);";
 
+    public static final String CREATE_FAVORITE_TABLE =
+            "CREATE TABLE favorites (" +
+                    "username VARCHAR(255) NOT NULL, " +
+                    "hotelId VARCHAR(10) NOT NULL," +
+                    "CONSTRAINT unique_username_hotelId " +
+                    "UNIQUE (username, hotelId));";
+
     public static final String CREATE_HOTEL_TABLE =
             "CREATE TABLE hotels (" +
                     "hotelId VARCHAR(10) PRIMARY KEY, " +
@@ -36,6 +43,11 @@ public class PreparedStatements {
                     "state VARCHAR(255) NOT NULL, " +
                     "country VARCHAR(255) NOT NULL, " +
                     "expediaLink VARCHAR(255) NOT NULL);";
+
+    public static final String INSERT_FAVORITE_HOTEL =
+            "INSERT INTO favorites " +
+                    "(username, hotelId) " +
+                    "VALUES (?, ?)";
 
     public static final String INSERT_LINK =
             "INSERT INTO linkhistory " +
@@ -80,6 +92,21 @@ public class PreparedStatements {
     public static final String GET_HOTELS_WITH_KEYWORD =
             "SELECT * FROM hotels " +
                     "WHERE hotelName LIKE CONCAT('%', ?, '%')";
+
+    public static final String GET_FAVORITE_HOTELS =
+            "SELECT " +
+                    "hotelId, " +
+                    "address," +
+                    "hotelName, " +
+                    "lat, " +
+                    "lng, " +
+                    "city, " +
+                    "state, " +
+                    "country, " +
+                    "expediaLink " +
+                    "FROM favorites " +
+                    "NATURAL JOIN hotels " +
+                    "WHERE username=?";
 
     public static final String UPDATE_REVIEW =
             "UPDATE reviews " +

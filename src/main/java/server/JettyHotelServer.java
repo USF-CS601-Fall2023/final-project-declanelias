@@ -47,6 +47,8 @@ public class JettyHotelServer {
 		handler.addServlet(DeleteReviewServlet.class, "/deleteReview");
 		handler.addServlet(EditReviewServlet.class, "/editReview");
 		handler.addServlet(SaveLink.class, "/saveLink");
+		handler.addServlet(GetWeatherServlet.class, "/getWeather");
+		handler.addServlet(FavoriteHotelServlet.class, "/favoriteHotel");
 		handler.addServlet(LoginServlet.class, "/*");
 
 		handler.setAttribute("templateEngine", velocity);

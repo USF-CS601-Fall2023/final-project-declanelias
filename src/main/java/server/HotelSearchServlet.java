@@ -1,19 +1,14 @@
 package server;
 
-import HotelData.HotelData;
-import HotelData.Reviews;
-import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import server.Database.DatabaseHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 /**
  * Handles endpoint /hotelSearch which searches for a hotel given a keyword

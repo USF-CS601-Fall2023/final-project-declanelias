@@ -1,7 +1,6 @@
 package server;
 
-import HotelData.Reviews;
-import org.eclipse.jetty.server.session.Session;
+import server.Database.DatabaseHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
