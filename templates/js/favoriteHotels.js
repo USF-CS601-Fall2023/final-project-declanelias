@@ -1,6 +1,8 @@
 function favoriteHotel(id) {
 
-    fetch('/favoriteHotel', {
+    console.log(id);
+
+    fetch('/addFavorite', {
         method: 'POST',
         body: "id=" + encodeURIComponent(id),
         headers: {

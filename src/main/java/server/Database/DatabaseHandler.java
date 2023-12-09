@@ -105,6 +105,10 @@ public class DatabaseHandler {
         return hotelHandler.getHotelSet(username, PreparedStatements.GET_FAVORITE_HOTELS);
     }
 
+    public void removeFavoriteHotel(String username, String hotelId) {
+        hotelHandler.removeFavorite(username, hotelId);
+    }
+
     // Review methods, check DatabaseReviewHandler for javadocs
     public void addReview(HotelReview review) {
         reviewHandler.addReview(review);

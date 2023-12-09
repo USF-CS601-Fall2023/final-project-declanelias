@@ -121,6 +121,11 @@ public class PreparedStatements {
             "DELETE FROM reviews " +
                     "WHERE hotelId = (?) AND reviewId = (?) AND userNickname = (?);";
 
+    public static final String REMOVE_FAVORITE_HOTEL =
+            "DELETE FROM favorites " +
+                    "WHERE hotelId = (?) " +
+                    "AND username = (?);";
+
     public static final String CLEAR_HISTORY =
             "DELETE FROM linkhistory " +
                     "WHERE username = (?);";

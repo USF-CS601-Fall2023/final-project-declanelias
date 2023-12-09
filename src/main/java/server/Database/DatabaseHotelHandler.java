@@ -128,4 +128,24 @@ public class DatabaseHotelHandler {
             System.out.println(ex);
         }
     }
+
+    public void removeFavorite(String username, String hotelId) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            try {
+                statement = connection.prepareStatement(PreparedStatements.REMOVE_FAVORITE_HOTEL);
+                statement.setString(1, hotelId);
+                statement.setString(2, username);
+
+                statement.executeUpdate();
+                statement.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
 }
