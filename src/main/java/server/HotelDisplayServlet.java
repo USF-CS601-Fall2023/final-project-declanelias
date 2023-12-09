@@ -1,6 +1,9 @@
 package server;
 
 import HotelData.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import server.Database.DatabaseHandler;
@@ -38,12 +41,8 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
         context = new VelocityContext();
 
         hotelId = request.getParameter("hotelId");
-
-        Set<HotelReview> hotelReviewSet = dbHandler.getReviews(hotelId);
         Hotel hotel = dbHandler.getHotel(hotelId);
 
-        context.put("reviews", hotelReviewSet);
-        context.put("avgRating", calcAvgRating(hotelReviewSet));
         context.put("hotel", hotel);
 
         doGetHelper(request, response, "templates/hotel.html", ve, context);
@@ -66,22 +65,16 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
+        Set<HotelReview> hotelReviewSet = dbHandler.getReviews(hotelId);
 
-        String username = (String) session.getAttribute("username");
+        Double averageRating = calcAvgRating(hotelReviewSet);
+        JsonArray jsonArray = new JsonArray();
+        hotelReviewSet.forEach(review -> jsonArray.add(review.toJson()));
 
-        String title = request.getParameter("title");
-        String text = request.getParameter("review");
-        String rating = request.getParameter("rating");
-        String date = LocalDate.now().toString();
+        JsonObject json = new JsonObject();
+        json.addProperty("averageRating", averageRating);
+        json.add("reviews", jsonArray);
+        response.getWriter().println(json);
 
-
-        HotelReview review = new HotelReview(
-                Integer.parseInt(hotelId), title, text,
-                username, date, Double.parseDouble(rating));
-
-
-        dbHandler.addReview(review);
-        response.sendRedirect("/hotel?hotelId=" + hotelId);
     }
 }

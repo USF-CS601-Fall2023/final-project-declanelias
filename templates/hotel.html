@@ -87,7 +87,7 @@
                 Hotel: $hotel.hotelName <br>
                 Id: $hotel.id <br>
                 Address: $hotel.address <br>
-                Average Rating: $avgRating <br>
+                Average Rating: <div id="averageRating">Loading reviews...</div> <br>
                 Expedia: <a href="$hotel.expediaLink" onclick="saveLink('$hotel.expediaLink')">$hotel.expediaLink</a>
             </p>
             <p id="weather">
@@ -138,10 +138,11 @@
             #end
 
             <h2>Add a Review</h2>
-            <form method="post" action="/hotel">
+            <form method="post" action="/addReview">
                 Title:   <br> <input type="text" id="title" name="title" required> <br>
                 Rating: <br> <input type="number" id="rating" name="rating" required min="0" max="5"> <br>
                 Review: <br> <textarea id="review" name="review" rows="4" required></textarea> <br>
+                <input type="hidden" name="hotelId" value="$hotel.id">
                 <input type="submit" value="Submit Review">
             </form>
         </section>

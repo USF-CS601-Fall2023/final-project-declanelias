@@ -120,6 +120,6 @@ public final class Hotel implements JsonInterface, Comparable<Hotel>{
 
     @Override
     public int compareTo(Hotel o) {
-        return this.hotelName.compareTo(o.hotelName);
+        return -this.hotelName.compareTo(o.hotelName);
     }
 }
