@@ -1,24 +1,87 @@
-function fetchReviews(hotelId) {
-    fetch('/getReviews', {
-            method: 'POST',
-            body: "hotelId=" + encodeURIComponent(hotelId),
-            headers: {
-               'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('averageRating').innerHTML = data.averageRating;
-            const reviewsContainer = document.getElementById('reviews');
-            reviewsContainer.innerHTML = '';
+const reviewsPerPage = 5;
+let data;
+let hotelId;
+let currentPage;
 
-            data.reviews.forEach(review => {
-                const reviewElement = createReviewElement(review, data.username, hotelId);
-                reviewsContainer.appendChild(reviewElement);
-            });
-        })
-        .catch(error => console.error('Error fetching reviews:', error));
+function fetchReviews(id) {
+    hotelId = id;
+    fetch('/getReviews', {
+        method: 'POST',
+        body: "hotelId=" + encodeURIComponent(hotelId),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(response => response.json())
+    .then(receivedData => {
+        data = receivedData;
+        displayReviews(1);
+        // Add pagination controls
+        addPaginationControls(data.reviews.length);
+    })
+    .catch(error => console.error('Error fetching reviews:', error));
 }
+
+function displayReviews(page) {
+    previousPage = currentPage;
+    currentPage = page;
+    document.getElementById('averageRating').innerHTML = data.averageRating;
+
+    const reviewsContainer = document.getElementById('reviews');
+    reviewsContainer.innerHTML = '';
+
+    const startIndex = (currentPage - 1) * reviewsPerPage;
+    const endIndex = startIndex + reviewsPerPage;
+    const paginatedReviews = data.reviews.slice(startIndex, endIndex);
+
+    paginatedReviews.forEach(review => {
+        const reviewElement = createReviewElement(review, data.username, hotelId);
+        reviewsContainer.appendChild(reviewElement);
+    });
+}
+
+function addPaginationControls(totalReviews) {
+    const numPages = Math.ceil(totalReviews / reviewsPerPage);
+    const paginationContainer = document.getElementById('pagination');
+
+    paginationContainer.innerHTML = ''; // Clear existing pagination
+
+    const paginationList = document.createElement('ul');
+    paginationList.classList.add('pagination'); // Add Bootstrap pagination class
+
+    for (let i = 1; i <= numPages; i++) {
+        const pageItem = document.createElement('li');
+        const pageLink = document.createElement('a');
+        pageLink.textContent = i;
+        pageLink.addEventListener('click', function () {
+            updateActivePage(i);
+            displayReviews(i);
+        });
+
+        pageItem.appendChild(pageLink);
+
+        if (i === currentPage) {
+            pageItem.classList.add('active');
+        }
+
+        paginationList.appendChild(pageItem);
+    }
+
+    paginationContainer.appendChild(paginationList);
+}
+
+function updateActivePage(newPage) {
+    const paginationContainer = document.getElementById('pagination');
+    const pages = paginationContainer.querySelectorAll('.pagination li');
+
+    pages.forEach(page => {
+        page.classList.remove('active');
+    });
+
+    const currentPageItem = paginationContainer.querySelector(`.pagination li:nth-child(${newPage})`);
+    currentPageItem.classList.add('active');
+}
+
 
 
 function createReviewElement(review, username, hotelId) {
