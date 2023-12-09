@@ -126,5 +126,13 @@ public class DatabaseHandler {
     public void addLinkToHistory(String username, String link) {
         linkHandler.addLinkToHistory(username, link);
     }
+
+    public Set<Link> getLinkHistory(String username) {
+        return linkHandler.getLinkHistory(username);
+    }
+
+    public void clearLinkHistory(String username) {
+        linkHandler.clearLinkHistory(username);
+    }
 }
 

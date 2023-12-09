@@ -12,9 +12,9 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
         DatabaseHandler dbHandler = DatabaseHandler.getInstance();
-//        dbHandler.createTable(PreparedStatements.CREATE_LINK_HISTORY_TABLE);
+        dbHandler.createTable(PreparedStatements.CREATE_LINK_HISTORY_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_HOTEL_TABLE);
-        dbHandler.createTable(PreparedStatements.CREATE_FAVORITE_TABLE);
+//        dbHandler.createTable(PreparedStatements.CREATE_FAVORITE_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_REVIEW_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_USER_TABLE);
 

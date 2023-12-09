@@ -13,7 +13,8 @@ public class PreparedStatements {
     public static final String CREATE_LINK_HISTORY_TABLE =
             "CREATE TABLE linkhistory (" +
                     "username VARCHAR(32) NOT NULL, " +
-                    "expediaLink VARCHAR(255) NOT NULL);";
+                    "expediaLink VARCHAR(255) NOT NULL, " +
+                    "time VARCHAR(255) NOT NULL);";
 
     public static final String CREATE_REVIEW_TABLE =
             "CREATE TABLE reviews (" +
@@ -51,8 +52,8 @@ public class PreparedStatements {
 
     public static final String INSERT_LINK =
             "INSERT INTO linkhistory " +
-                    "(username, expediaLink) " +
-                    "VALUES (?, ?)";
+                    "(username, expediaLink, time) " +
+                    "VALUES (?, ?, ?)";
 
     public static final String INSERT_HOTEL =
             "INSERT INTO hotels " +
@@ -86,6 +87,9 @@ public class PreparedStatements {
     public static final String GET_HOTEL_FROM_ID =
             "SELECT * FROM hotels WHERE hotelId=(?)";
 
+    public static final String GET_LINK_HISTORY =
+            "SELECT * FROM linkhistory WHERE username=(?)";
+
     public static final String GET_REVIEWS_FROM_ID =
             "SELECT * FROM reviews WHERE hotelId=(?)";
 
@@ -116,4 +120,8 @@ public class PreparedStatements {
     public static final String DELETE_REVIEW =
             "DELETE FROM reviews " +
                     "WHERE hotelId = (?) AND reviewId = (?) AND userNickname = (?);";
+
+    public static final String CLEAR_HISTORY =
+            "DELETE FROM linkhistory " +
+                    "WHERE username = (?);";
 }

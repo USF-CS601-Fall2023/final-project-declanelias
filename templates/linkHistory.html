@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/clearHistory.js"></script>
+    <title>Expedia Link History</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: left;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h5 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .link-entry {
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 18px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h5>Hello, $name!</h5>
+
+    <form method="post" action="/logout">
+        <button type="submit">Logout</button>
+    </form>
+
+    <form>
+        <button type="submit" onclick="clearHistory()">Clear History</button>
+    </form>
+
+    <p>Expedia Link History:</p>
+    <div id="links">
+        #foreach($link in $links)
+        <div class="link-entry">
+            Visited <a href="$link.link"> $link.link</a> at $link.time on $link.date
+        </div>
+        #end
+    </div>
+</div>
+
+<resource name="style1.css" type="download" location="style1.css"></resource>
+</body>
+
+</html>
