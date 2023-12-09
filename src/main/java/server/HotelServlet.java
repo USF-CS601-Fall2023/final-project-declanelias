@@ -32,12 +32,12 @@ public interface HotelServlet {
         PrintWriter out = response.getWriter();
 
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
+//        String username = (String) session.getAttribute("username");
 
-        checkSession(username, response);
+//        checkSession(username, response);
 
         Template template = ve.getTemplate(htmlFile);
-        context.put("name", username);
+//        context.put("name", username);
 
         StringWriter writer = new StringWriter();
         template.merge(context, writer);

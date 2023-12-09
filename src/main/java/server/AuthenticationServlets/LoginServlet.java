@@ -1,6 +1,7 @@
-package server;
+package server.AuthenticationServlets;
 
 import org.apache.velocity.app.VelocityEngine;
+import server.AuthenticationServlets.AuthenticationServlet;
 import server.Database.DatabaseHandler;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ import java.util.List;
  * Logs in the user
  */
 @SuppressWarnings("serial")
-public class LoginServlet extends HttpServlet implements AuthenticationServlet{
+public class LoginServlet extends HttpServlet implements AuthenticationServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");

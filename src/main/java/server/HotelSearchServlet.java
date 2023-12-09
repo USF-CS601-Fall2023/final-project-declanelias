@@ -1,5 +1,8 @@
 package server;
 
+import HotelData.Hotel;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import server.Database.DatabaseHandler;
@@ -9,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Handles endpoint /hotelSearch which searches for a hotel given a keyword
@@ -34,8 +38,16 @@ public class HotelSearchServlet extends HttpServlet implements HotelServlet{
 
         DatabaseHandler dbHandler = DatabaseHandler.getInstance();
 
-        context.put("hotels", dbHandler.getHotelsByKeyword(word));
+        Set<Hotel> hotels = dbHandler.getHotelsByKeyword(word);
+        JsonObject json = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        hotels.forEach(h -> jsonArray.add(h.toJson()));
+        json.add("hotels", jsonArray);
 
-        doGetHelper(request, response, "templates/hotelInfo.html", ve, context);
+        response.getWriter().println(json);
+
+//        context.put("hotels", dbHandler.getHotelsByKeyword(word));
+//
+//        doGetHelper(request, response, "templates/hotelInfo.html", ve, context);
     }
 }

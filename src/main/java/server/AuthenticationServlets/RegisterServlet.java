@@ -1,6 +1,7 @@
-package server;
+package server.AuthenticationServlets;
 
 import org.apache.velocity.app.VelocityEngine;
+import server.AuthenticationServlets.AuthenticationServlet;
 import server.Database.DatabaseHandler;
 
 import javax.servlet.ServletException;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Servlet to register a new user
  */
-public class RegisterServlet extends HttpServlet implements AuthenticationServlet{
+public class RegisterServlet extends HttpServlet implements AuthenticationServlet {
 
 
     /**

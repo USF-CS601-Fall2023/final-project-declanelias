@@ -1,4 +1,4 @@
-package server;
+package server.HotelInfoServlets;
 
 import HotelData.HotelReview;
 import com.google.gson.JsonArray;
@@ -21,6 +21,7 @@ public class GetReviewsServlet extends HttpServlet {
      * @return average rating
      */
     private double calcAvgRating(Set<HotelReview> reviews) {
+
         return reviews
                 .stream()
                 .mapToDouble(HotelReview::getAverageRating)
@@ -43,8 +44,6 @@ public class GetReviewsServlet extends HttpServlet {
         json.addProperty("averageRating", averageRating);
         json.addProperty("username", username);
         json.add("reviews", jsonArray);
-
-        System.out.println(json);
 
         response.getWriter().println(json);
 

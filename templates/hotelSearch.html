@@ -1,68 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        p {
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 20px;
-        }
-
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Hotel Search</title>
 </head>
 
 <body>
-<p>Hello, $name!</p>
 
-<form method="post" action="/logout">
-    <button type="submit">Logout</button>
-</form>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Hotel Search</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="#">Favorite Hotels</a></li>
+            <li class="active"><a href="#">Link History</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+    </div>
+</nav>
 
-<form method="post" action="/hotelSearch">
-    <p>Search for hotel:</p>
-    <input type="text" name="word">
-    <p><input type="submit" value="Search"></p>
-</form>
+<div class="container">
+    <h1>Search For Hotels</h1>
+    <form action="/action_page.php">
+        <div class="input-group">
+            <input id="search" type="text" class="form-control" placeholder="Enter Keyword..." name="search">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit" onclick="displayHotels()"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+
 </body>
 
 </html>

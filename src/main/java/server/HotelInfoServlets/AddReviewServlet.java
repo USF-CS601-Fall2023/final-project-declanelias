@@ -1,4 +1,4 @@
-package server;
+package server.HotelInfoServlets;
 
 import HotelData.HotelReview;
 import server.Database.DatabaseHandler;
@@ -30,8 +30,6 @@ public class AddReviewServlet extends HttpServlet {
                 Integer.parseInt(hotelId), title, text,
                 username, date, Double.parseDouble(rating));
 
-
         DatabaseHandler.getInstance().addReview(review);
-        response.sendRedirect("/hotel?hotelId=" + hotelId);
     }
 }

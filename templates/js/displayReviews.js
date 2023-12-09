@@ -51,33 +51,30 @@ function createReviewElement(review, username, hotelId) {
 }
 
 function createDeleteForm(review, hotelId, reviewElement) {
-    // Create the form element
-    const deleteForm = document.createElement('form');
-    deleteForm.method = 'post';
-    deleteForm.action = '/deleteReview';
-
-    // Create and append the hidden inputs
-    const reviewIdInput = document.createElement('input');
-    reviewIdInput.type = 'hidden';
-    reviewIdInput.name = 'reviewId';
-    reviewIdInput.value = review.reviewId;
-    deleteForm.appendChild(reviewIdInput);
-
-    const hotelIdInput = document.createElement('input');
-    hotelIdInput.type = 'hidden';
-    hotelIdInput.name = 'hotelId';
-    hotelIdInput.value = hotelId;
-    deleteForm.appendChild(hotelIdInput);
-
-    // Create the "Delete Review" button
     const deleteButton = document.createElement('button');
-    deleteButton.type = 'submit';
+    deleteButton.type = 'button';
     deleteButton.textContent = 'Delete Review';
+    deleteButton.addEventListener('click', function () {
+        deleteReview(review, hotelId);
+    });
 
-    // Append the button to the form
-    deleteForm.appendChild(deleteButton);
+    reviewElement.appendChild(deleteButton);
+}
 
-    reviewElement.appendChild(deleteForm);
+function deleteReview(review, hotelId) {
+    fetch('/deleteReview', {
+        method: 'POST',
+        body: "reviewId=" + encodeURIComponent(review.reviewId) + "&hotelId=" + encodeURIComponent(hotelId),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(res => {
+        fetchReviews(hotelId);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 
@@ -115,7 +112,7 @@ function createModal(review, hotelId, reviewElement) {
     editedReviewTextarea.name = 'editedReview';
     editedReviewTextarea.rows = '4';
     editedReviewTextarea.required = true;
-    editedReviewTextarea.textContent = 'Hello!'; // Set initial value
+    editedReviewTextarea.textContent = review.reviewText;
     modal.appendChild(document.createTextNode('New Review: '));
     modal.appendChild(editedReviewTextarea);
     modal.appendChild(document.createElement('br'));
@@ -170,4 +167,71 @@ function createEditForm(review, hotelId, reviewElement) {
 
     // Append the form to the body or another appropriate container
     reviewElement.appendChild(editForm);
+}
+
+function openModal() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("myModal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("myModal").style.display = "none";
+}
+
+function submitForm(reviewId, hotelId) {
+    var editedReview = document.getElementById("editedReview").value;
+    var editedTitle = document.getElementById("editedTitle").value;
+
+    var formData =  "reviewId=" + encodeURIComponent(reviewId) +
+                    "&hotelId=" + encodeURIComponent(hotelId) +
+                    "&editedReview=" + encodeURIComponent(editedReview) +
+                    "&editedTitle=" + encodeURIComponent(editedTitle);
+
+
+    console.log(formData);
+
+    fetch('/editReview', {
+        method: 'POST',
+        body: formData,
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(response => {
+        console.log('Response:', response);
+        closeModal();
+        document.getElementById("reviewText_" + reviewId).innerHTML = editedReview ;
+        document.getElementById("reviewTitle_" + reviewId).innerHTML = "<h3>" + editedTitle + "</h3>";
+    })
+    .catch(error => {
+        // Handle errors
+        console.error('Error:', error);
+    });
+}
+
+function addReview(hotelId) {
+    var title = document.getElementById("title").value;
+    var rating = document.getElementById("rating").value;
+    var review = document.getElementById("review").value;
+
+    var formData =  "hotelId=" + encodeURIComponent(hotelId) +
+                    "&title=" + encodeURIComponent(title) +
+                    "&review=" + encodeURIComponent(review) +
+                    "&rating=" + encodeURIComponent(rating);
+
+    fetch('/addReview', {
+        method: 'POST',
+        body: formData,
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(response => {
+        fetchReviews(hotelId);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
 }

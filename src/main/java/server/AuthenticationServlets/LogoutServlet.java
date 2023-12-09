@@ -1,4 +1,4 @@
-package server;
+package server.AuthenticationServlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

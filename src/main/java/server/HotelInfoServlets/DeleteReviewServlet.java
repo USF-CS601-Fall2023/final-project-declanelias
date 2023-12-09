@@ -1,4 +1,4 @@
-package server;
+package server.HotelInfoServlets;
 
 import server.Database.DatabaseHandler;
 
@@ -10,9 +10,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * sets the review to what the user changed the title and text to
+ * Deletes review
  */
-public class EditReviewServlet extends HttpServlet {
+public class DeleteReviewServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,9 +22,7 @@ public class EditReviewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String reviewId = request.getParameter("reviewId");
-        String hotelId= request.getParameter("hotelId");
-        String text = request.getParameter("editedReview");
-        String title = request.getParameter("editedTitle");
+        String hotelId = request.getParameter("hotelId");
 
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
@@ -32,9 +30,13 @@ public class EditReviewServlet extends HttpServlet {
         if (username.isEmpty()) {
             response.sendRedirect("/login");
         }
-
         DatabaseHandler
                 .getInstance()
-                .updateReview(hotelId, reviewId, title, text);
+                .deleteReview(hotelId, reviewId, username);
+
+        response.sendRedirect("/hotel?hotelId=" + hotelId);
     }
+
+
+
 }

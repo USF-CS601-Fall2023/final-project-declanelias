@@ -6,6 +6,10 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.apache.velocity.app.VelocityEngine;
+import server.AuthenticationServlets.LoginServlet;
+import server.AuthenticationServlets.LogoutServlet;
+import server.AuthenticationServlets.RegisterServlet;
+import server.HotelInfoServlets.*;
 
 /**
  * Main class that runs the jetty server

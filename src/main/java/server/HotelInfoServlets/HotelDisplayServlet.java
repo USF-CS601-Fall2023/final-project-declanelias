@@ -1,4 +1,4 @@
-package server;
+package server.HotelInfoServlets;
 
 import HotelData.*;
 import com.google.gson.JsonArray;
@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import server.Database.DatabaseHandler;
+import server.HotelServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

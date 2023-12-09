@@ -1,7 +1,8 @@
-package server;
+package server.HotelInfoServlets;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import server.HttpFetcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
