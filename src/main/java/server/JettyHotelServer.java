@@ -6,6 +6,7 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.apache.velocity.app.VelocityEngine;
+import server.AuthenticationServlets.LoginRequiredServlet;
 import server.AuthenticationServlets.LoginServlet;
 import server.AuthenticationServlets.LogoutServlet;
 import server.AuthenticationServlets.RegisterServlet;
@@ -52,11 +53,12 @@ public class JettyHotelServer {
 		handler.addServlet(EditReviewServlet.class, "/editReview");
 		handler.addServlet(SaveLink.class, "/saveLink");
 		handler.addServlet(GetWeatherServlet.class, "/getWeather");
-		handler.addServlet(FavoriteHotelServlet.class, "/favoriteHotel");
+		handler.addServlet(FavoriteHotelServlet.class, "/favorites");
 		handler.addServlet(DisplayLinkServlet.class, "/history");
 		handler.addServlet(AddReviewServlet.class, "/addReview");
 		handler.addServlet(GetReviewsServlet.class, "/getReviews");
-		handler.addServlet(LoginServlet.class, "/*");
+		handler.addServlet(HotelSearchServlet.class, "/home");
+		handler.addServlet(LoginRequiredServlet.class, "/loginRequired");
 
 		handler.setAttribute("templateEngine", velocity);
 

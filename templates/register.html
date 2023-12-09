@@ -1,79 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="styles/login.css"> <!-- Add your external style sheet if needed -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="js/validate.js"></script>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .login-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-
-        p {
-            margin-top: 0;
-            color: #333;
-            font-size: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        #messageFromServer {
-            color: red;
-        }
-    </style>
 </head>
 
 <body>
-<div class="login-container">
-    <form id="form" method="post" action="/register" onsubmit="validate(event, '/register', '/login');">
-        <p> Register Below </p>
-        Username: <br> <input type="text" name="username"> <br>
-        Password: <br> <input type="password" name="password"> <br>
 
-        <p> <input type="submit" value="Register"></p>
-    </form>
-    <p id="messageFromServer" style="color:red"></p>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/home">Hotel Search</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/home">Home</a></li>
+            <li class="active"><a href="/favorites">Favorite Hotels</a></li>
+            <li class="active"><a href="/history">Link History</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form id="form" method="post" action="/register" onsubmit="validate(event, '/register', '/login');" class="well" style="background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <h2 class="text-center">Register Below</h2>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Register" class="btn btn-success btn-block">
+                </div>
+            </form>
+
+            <p id="messageFromServer" class="text-center" style="color: red;"></p>
+        </div>
+    </div>
 </div>
+
 </body>
+
 </html>

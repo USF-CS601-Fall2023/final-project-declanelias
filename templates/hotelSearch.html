@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/displayHotels.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Hotel Search</title>
+    <style>
+        .search-container {
+            margin-top: 20px;
+        }
+        .jumbotron {
+            background-color: #428bca;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,32 +28,46 @@
             <a class="navbar-brand" href="#">Hotel Search</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li class="active"><a href="#">Favorite Hotels</a></li>
-            <li class="active"><a href="#">Link History</a></li>
+            <li class="active"><a href="/home">Home</a></li>
+            <li class="active"><a href="/favorites">Favorite Hotels</a></li>
+            <li class="active"><a href="/history">Link History</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            #if($isLoggedIn)
+                <li><a href="/home"><span class="glyphicon glyphicon-user"></span> Hello $username!</a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            #else
+                <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            #end
         </ul>
     </div>
 </nav>
 
 <div class="container">
-    <h1>Search For Hotels</h1>
-    <form action="/action_page.php">
-        <div class="input-group">
-            <input id="search" type="text" class="form-control" placeholder="Enter Keyword..." name="search">
-            <div class="input-group-btn">
-                <button class="btn btn-default" type="submit" onclick="displayHotels()"><i class="glyphicon glyphicon-search"></i></button>
+    <div class="jumbotron">
+        <h1>Find Your Ideal Hotel</h1>
+        <p>Discover the perfect stay for your next adventure.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center search-container">
+            <h1>Search For Hotels</h1>
+            <div class="input-group">
+                <input id="search" type="text" class="form-control" placeholder="Enter Keyword..." name="search">
+                <div class="input-group-btn">
+                    <button class="btn btn-primary" type="button" onclick="displayHotels()">
+                        <i class="glyphicon glyphicon-search"></i> Search
+                    </button>
+                </div>
             </div>
         </div>
-    </form>
+    </div>
+
+    <div class="row">
+        <div id="hotels" class="list-group col-md-8 col-md-offset-2"></div>
+    </div>
 </div>
-
-</body>
-</html>
-
 
 </body>
 

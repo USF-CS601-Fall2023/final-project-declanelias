@@ -15,6 +15,11 @@ public class FavoriteHotelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = (String) req.getSession().getAttribute("username");
+        if (username == null) {
+            resp.sendRedirect("/loginRequired");
+        }
+
+
         Set<Hotel> hotels = DatabaseHandler.getInstance().getFavoriteHotels(username);
 
         hotels.forEach(System.out::println);

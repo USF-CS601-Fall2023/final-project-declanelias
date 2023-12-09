@@ -22,6 +22,11 @@ public class DisplayLinkServlet extends HttpServlet implements HotelServlet {
 
         HttpSession session = request.getSession();
         username = (String) session.getAttribute("username");
+
+        if (username == null) {
+            response.sendRedirect("/loginRequired");
+        }
+
         Set<Link> links = DatabaseHandler.getInstance().getLinkHistory(username);
 
         VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");

@@ -51,6 +51,7 @@ public final class Hotel implements JsonInterface, Comparable<Hotel>{
         jsonObject.addProperty("state", state);
         jsonObject.addProperty("lat", ll.getLat());
         jsonObject.addProperty("lng", ll.getLng());
+        jsonObject.addProperty("link", getExpediaLink());
         return jsonObject;
     }
 

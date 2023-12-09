@@ -28,6 +28,8 @@ public class HotelSearchServlet extends HttpServlet implements HotelServlet{
         ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
         context = new VelocityContext();
 
+        String username = (String) request.getSession().getAttribute("username");
+        ServletHelper.setLoggedInStatus(username, context);
         doGetHelper(request, response, "templates/hotelSearch.html", ve, context);
     }
 
@@ -36,9 +38,12 @@ public class HotelSearchServlet extends HttpServlet implements HotelServlet{
         String word = request.getParameter("word");
         word = word.toLowerCase();
 
+        System.out.println(word);
+
         DatabaseHandler dbHandler = DatabaseHandler.getInstance();
 
         Set<Hotel> hotels = dbHandler.getHotelsByKeyword(word);
+
         JsonObject json = new JsonObject();
         JsonArray jsonArray = new JsonArray();
         hotels.forEach(h -> jsonArray.add(h.toJson()));

@@ -8,6 +8,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import server.Database.DatabaseHandler;
 import server.HotelServlet;
+import server.ServletHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -45,6 +46,9 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
         Hotel hotel = dbHandler.getHotel(hotelId);
 
         context.put("hotel", hotel);
+
+        String username = (String) request.getSession().getAttribute("username");
+        ServletHelper.setLoggedInStatus(username, context);
 
         doGetHelper(request, response, "templates/hotel.html", ve, context);
     }

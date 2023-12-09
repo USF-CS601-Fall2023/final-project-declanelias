@@ -24,8 +24,8 @@ public class DatabaseHotelHandler {
                 System.out.println("Added hotel " + hotel.getHotelName());
                 statement = connection.prepareStatement(PreparedStatements.INSERT_HOTEL);
                 statement.setString(1, hotel.getId());
-                statement.setString(2, hotel.getHotelName());
-                statement.setString(3, hotel.getAddress());
+                statement.setString(2, hotel.getAddress());
+                statement.setString(3, hotel.getHotelName());
                 statement.setDouble(4, hotel.getLat());
                 statement.setDouble(5, hotel.getLng());
                 statement.setString(6, hotel.getCity());
@@ -87,8 +87,8 @@ public class DatabaseHotelHandler {
 
     private Hotel createHotel(ResultSet result) throws SQLException {
         String hotelId = result.getString(1);
-        String hotelName = result.getString(2);
-        String address = result.getString(3);
+        String address = result.getString(2);
+        String hotelName = result.getString(3);
         double lat = result.getDouble(4);
         double lng = result.getDouble(5);
         String city = result.getString(6);

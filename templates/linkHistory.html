@@ -6,93 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/clearHistory.js"></script>
     <title>Expedia Link History</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: left;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        h5 {
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        form {
-            margin-bottom: 20px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-            padding: 10px 15px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        p {
-            margin-bottom: 10px;
-            color: #333;
-            font-size: 20px;
-        }
-
-        .link-entry {
-            margin-bottom: 10px;
-        }
-
-        a {
-            text-decoration: none;
-            color: #007BFF;
-            font-size: 18px;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 
 <body>
-<div class="container">
-    <h5>Hello, $name!</h5>
-
-    <form method="post" action="/logout">
-        <button type="submit">Logout</button>
-    </form>
-
-    <form>
-        <button type="submit" onclick="clearHistory()">Clear History</button>
-    </form>
-
-    <p>Expedia Link History:</p>
-    <div id="links">
-        #foreach($link in $links)
-        <div class="link-entry">
-            Visited <a href="$link.link"> $link.link</a> at $link.time on $link.date
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Hotel Search</a>
         </div>
-        #end
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/home">Home</a></li>
+            <li class="active"><a href="/favorites">Favorite Hotels</a></li>
+            <li class="active"><a href="/history">Link History</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/home"><span class="glyphicon glyphicon-user"></span> Hello $username!</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
     </div>
+</nav>
+
+<div class="container">
+    <form class="text-center">
+        <button type="button" class="btn btn-danger" onclick="clearHistory()">Clear History</button>
+    </form>
+
+    <h4 class="text-center">Expedia Link History:</h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Link</th>
+            <th>Date</th>
+            <th>Time</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        #foreach($link in $links)
+        <tr>
+            <td><a href="$link.link"> $link.link</a></td>
+            <td>$link.date</td>
+            <td>$link.time</td>
+        </tr>
+        #end
+        </tbody>
+    </table>
 </div>
 
-<resource name="style1.css" type="download" location="style1.css"></resource>
 </body>
 
 </html>

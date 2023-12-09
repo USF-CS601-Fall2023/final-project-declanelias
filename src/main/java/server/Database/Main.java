@@ -12,8 +12,8 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
         DatabaseHandler dbHandler = DatabaseHandler.getInstance();
-        dbHandler.createTable(PreparedStatements.CREATE_LINK_HISTORY_TABLE);
-//        dbHandler.createTable(PreparedStatements.CREATE_HOTEL_TABLE);
+//        dbHandler.createTable(PreparedStatements.CREATE_LINK_HISTORY_TABLE);
+        dbHandler.createTable(PreparedStatements.CREATE_HOTEL_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_FAVORITE_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_REVIEW_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_USER_TABLE);
@@ -23,7 +23,7 @@ public class Main {
 //        dbhandler.createHotelTable();
 //        dbhandler.createReviewTable();
 
-//        loadHotelInfo(args);
+        loadHotelInfo(args);
 
 //        Set<Hotel> review = dbHandler.getHotelsByKeyword("");
 //        System.out.println(review);
@@ -31,7 +31,7 @@ public class Main {
 
     private static void loadHotelInfo(String[] args) {
         ThreadSafeHotels hotels = new ThreadSafeHotels();
-        ThreadSafeReviews reviews = new ThreadSafeReviews(Set.of("a", "the", "is", "are", "were", "and"));
+//        ThreadSafeReviews reviews = new ThreadSafeReviews(Set.of("a", "the", "is", "are", "were", "and"));
 
         CommandLineParser cp = new CommandLineParser();
         cp.parse(args, Set.of("hotels", "reviews", "threads"));
@@ -42,9 +42,9 @@ public class Main {
 
         FileParser fp = new FileParser(Integer.parseInt(numThreads), true);
         fp.addHotels(hotelPath, hotels);
-        fp.addReviews(reviewPath, reviews);
+//        fp.addReviews(reviewPath, reviews);
 
         hotels.addToDb();
-        reviews.addToDb();
+//        reviews.addToDb();
     }
 }

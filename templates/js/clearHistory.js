@@ -3,7 +3,7 @@ function clearHistory() {
             method: 'POST'
         })
         .then(response => {
-            document.getElementById("links").innerHTML = "";
+            document.getElementById("tableBody").innerHTML = "";
         })
         .catch(error => {
                 console.error('Error:', error);
