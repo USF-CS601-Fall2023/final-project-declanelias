@@ -47,34 +47,4 @@ public class HotelDisplayServlet extends HttpServlet implements HotelServlet {
 
         doGetHelper(request, response, "templates/hotel.html", ve, context);
     }
-
-    /**
-     * calculates the average rating of the reviews
-     *
-     * @param reviews
-     * @return average rating
-     */
-    private double calcAvgRating(Set<HotelReview> reviews) {
-        return reviews
-                .stream()
-                .mapToDouble(HotelReview::getAverageRating)
-                .average()
-                .orElse(0);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        Set<HotelReview> hotelReviewSet = dbHandler.getReviews(hotelId);
-
-        Double averageRating = calcAvgRating(hotelReviewSet);
-        JsonArray jsonArray = new JsonArray();
-        hotelReviewSet.forEach(review -> jsonArray.add(review.toJson()));
-
-        JsonObject json = new JsonObject();
-        json.addProperty("averageRating", averageRating);
-        json.add("reviews", jsonArray);
-        response.getWriter().println(json);
-
-    }
 }

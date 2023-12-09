@@ -6,6 +6,7 @@
         <script src="js/saveLink.js"></script>
         <script src="js/loadWeather.js"></script>
         <script src="js/favoriteHotels.js"></script>
+        <script src="js/displayReviews.js"></script>
         <style>
             body {
                 font-family: 'Arial', sans-serif;
@@ -96,46 +97,8 @@
             <script>loadWeather($hotel.lat, $hotel.lng)</script>
 
             <h2>Reviews:</h2>
-
-            #foreach( $review in $reviews)
-                <div class="review">
-                    <div class="reviewHeader">
-                        <span>Review by $review.userNickname</span>
-                        <span>Submission Date: $review.submissionDate</span>
-                    </div>
-                    <div id="reviewTitle_${review.reviewId}">
-                        <h3>$review.title</h3>
-                    </div>
-                    <div id="reviewText_${review.reviewId}">
-                        $review.reviewText
-                    </div>
-
-                    #if ($name.equals($review.userNickname))
-
-                    <form id="editForm" method="post" action="/editReview">
-                        <input type="hidden" name="reviewId" value="$review.reviewId">
-                        <input type="hidden" name="hotelId" value="$review.hotelId">
-                        <button type="button" onclick="openModal()">Edit Review</button>
-                    </form>
-
-                    <div id="overlay" class="overlay" onclick="closeModal()"></div>
-                    <div id="myModal" class="modal">
-                        <span onclick="closeModal()" style="cursor: pointer;">&times;</span>
-                        New Title: <br> <input id="editedTitle" type="text" name="reviewTitle" value="$review.title"> <br>
-                        New Review: <br> <textarea id="editedReview" name="editedReview" rows="4" required>Hello!</textarea> <br>
-                        <button type="button" onclick="submitForm($review.reviewId, $review.hotelId)">Submit Edited Review</button>
-                    </div>
-
-
-                    <form method="post" action="/deleteReview">
-                        <input type="hidden" name="reviewId" value="$review.reviewId">
-                        <input type="hidden" name="hotelId" value="$review.hotelId">
-                        <button type="submit">Delete Review</button>
-                    </form>
-                    #end
-                </div>
-
-            #end
+            <div id="reviews">Loading reviews</div>
+            <script>fetchReviews($hotel.id)</script>
 
             <h2>Add a Review</h2>
             <form method="post" action="/addReview">
