@@ -17,6 +17,7 @@ public class Main {
 //        dbHandler.createTable(PreparedStatements.CREATE_FAVORITE_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_REVIEW_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_USER_TABLE);
+        dbHandler.createTable(PreparedStatements.CREATE_LOGIN_TABLE);
 
 
 //        dbHandler.createUserTable();

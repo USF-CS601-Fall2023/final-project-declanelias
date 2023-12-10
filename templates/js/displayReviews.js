@@ -90,8 +90,8 @@ function createReviewElement(review, username, hotelId) {
 
     const reviewHeader = document.createElement('div');
     reviewHeader.className = 'reviewHeader';
-    reviewHeader.innerHTML = `<span>Review by ${review.user}</span>
-                              <span>Submission Date: ${review.date}</span>`;
+    reviewHeader.innerHTML = `<span>Review by <b>${review.user}</b></span> <br>
+                              <span>${review.date}</span>`;
     reviewElement.appendChild(reviewHeader);
 
     const reviewTitle = document.createElement('div');

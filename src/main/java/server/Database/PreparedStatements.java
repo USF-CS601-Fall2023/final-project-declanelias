@@ -16,6 +16,11 @@ public class PreparedStatements {
                     "expediaLink VARCHAR(255) NOT NULL, " +
                     "time VARCHAR(255) NOT NULL);";
 
+    public static final String CREATE_LOGIN_TABLE =
+            "CREATE TABLE logins (" +
+                    "username VARCHAR(32) NOT NULL, " +
+                    "time VARCHAR(255) NOT NULL);";
+
     public static final String CREATE_REVIEW_TABLE =
             "CREATE TABLE reviews (" +
                     "hotelId VARCHAR(10) NOT NULL, " +
@@ -79,6 +84,10 @@ public class PreparedStatements {
     public static final String AUTH_SQL =
             "SELECT username FROM users " +
                     "WHERE username = ? AND password = ?";
+
+    public static final String CHECK_LOGIN =
+            "SELECT time FROM logins " +
+                    "WHERE username = ?";
 
     public static final String CHECK_USERNAME_SQL =
             "SELECT username FROM users " +

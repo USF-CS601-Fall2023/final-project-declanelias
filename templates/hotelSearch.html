@@ -2,11 +2,18 @@
 <html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <script src="js/displayHotels.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <title>Hotel Search</title>
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
         .search-container {
             margin-top: 20px;
         }
@@ -16,6 +23,8 @@
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -25,7 +34,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Hotel Search</a>
+            <a class="navbar-brand" href="/home">Hotel Search</a>
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="/home">Home</a></li>
@@ -44,11 +53,12 @@
     </div>
 </nav>
 
+<div class="jumbotron">
+    <h1>Find Your Ideal Hotel</h1>
+    <p>Discover the perfect stay for your next adventure.</p>
+</div>
+
 <div class="container">
-    <div class="jumbotron">
-        <h1>Find Your Ideal Hotel</h1>
-        <p>Discover the perfect stay for your next adventure.</p>
-    </div>
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2 text-center search-container">

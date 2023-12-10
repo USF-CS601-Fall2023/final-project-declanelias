@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/validate.js"></script>
 </head>
 
@@ -31,7 +32,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-            <form id="form" method="post" action="/register" onsubmit="validate(event, '/register', '/login');" class="well" style="background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <form id="form" method="post" action="/register" onsubmit="validate(event, '/register', '/login');" class="well">
                 <h2 class="text-center">Register Below</h2>
                 <div class="form-group">
                     <label for="username">Username:</label>
@@ -44,7 +45,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="Register" class="btn btn-success btn-block">
+                    <input type="submit" value="Register" class="btn btn-primary btn-block">
                 </div>
             </form>
 

@@ -2,18 +2,18 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <script src="js/clearHistory.js"></script>
     <title>Expedia Link History</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Hotel Search</a>
+            <a class="navbar-brand" href="/home">Hotel Search</a>
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="/home">Home</a></li>
@@ -26,13 +26,14 @@
         </ul>
     </div>
 </nav>
+<div class="jumbotron text-center">
+    <h1>Expedia Link History</h1>
+</div>
 
 <div class="container">
     <form class="text-center">
         <button type="button" class="btn btn-danger" onclick="clearHistory()">Clear History</button>
     </form>
-
-    <h4 class="text-center">Expedia Link History:</h4>
     <table class="table table-striped">
         <thead>
         <tr>

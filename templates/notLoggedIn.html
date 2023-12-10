@@ -2,49 +2,10 @@
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <title>Login Required</title>
-  <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        margin: 20px;
-        padding: 0;
-        background-color: #f2f2f2;
-    }
-
-    header {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    section {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-
-    .jumbotron {
-        background-color: #428bca;
-        color: #fff;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-    }
-
-    h1, h5 {
-        color: #333;
-    }
-
-    p {
-        line-height: 1.5;
-    }
-
-    .btn-container {
-        margin-top: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -52,7 +13,7 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Hotel Search</a>
+      <a class="navbar-brand" href="/home">Hotel Search</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="/home">Home</a></li>
@@ -66,12 +27,10 @@
   </div>
 </nav>
 
-<header>
-  <div class="jumbotron">
-    <h1>Login Required</h1>
-    <p>You must be logged in to view this page.</p>
-  </div>
-</header>
+<div class="jumbotron">
+  <h1>Login Required</h1>
+  <p>You must be logged in to view this page.</p>
+</div>
 
 <section>
   <h5>Please either log in or return to the home page.</h5>
@@ -80,11 +39,6 @@
     <a href="/home" class="btn btn-default">Return to Home</a>
   </div>
 </section>
-
-<!-- Include Bootstrap JS and jQuery (optional) -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 </body>
 
 </html>
