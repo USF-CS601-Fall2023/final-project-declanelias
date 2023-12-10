@@ -82,7 +82,13 @@ public class DatabaseHandler {
     public boolean authenticateUser(String username, String password) {
         return registrationHandler.authenticateUser(username, password);
     }
+    public String getLastLogin(String username) {
+        return registrationHandler.getLastLogin(username);
+    }
 
+    public void addLogin(String username, String time) {
+        registrationHandler.addLogin(username, time);
+    }
 
     // Hotel methods, check DatabaseHotelHandler for javadocs
     public Hotel getHotel(String hotelId){

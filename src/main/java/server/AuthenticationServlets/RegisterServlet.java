@@ -1,7 +1,6 @@
 package server.AuthenticationServlets;
 
 import org.apache.velocity.app.VelocityEngine;
-import server.AuthenticationServlets.AuthenticationServlet;
 import server.Database.DatabaseHandler;
 
 import javax.servlet.ServletException;

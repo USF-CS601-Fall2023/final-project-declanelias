@@ -1,4 +1,4 @@
-package server;
+package server.DisplayServlets;
 
 import HotelData.Hotel;
 import com.google.gson.JsonArray;
@@ -6,6 +6,8 @@ import com.google.gson.JsonObject;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import server.Database.DatabaseHandler;
+import server.HotelServlet;
+import server.ServletHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +19,7 @@ import java.util.Set;
 /**
  * Handles endpoint /hotelSearch which searches for a hotel given a keyword
  */
-public class HotelSearchServlet extends HttpServlet implements HotelServlet{
+public class HotelSearchServlet extends HttpServlet {
 
     VelocityEngine ve;
     VelocityContext context;
@@ -25,12 +27,8 @@ public class HotelSearchServlet extends HttpServlet implements HotelServlet{
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
-        context = new VelocityContext();
-
-        String username = (String) request.getSession().getAttribute("username");
-        ServletHelper.setLoggedInStatus(username, context);
-        doGetHelper(request, response, "templates/hotelSearch.html", ve, context);
+        ServletHelper helper = new ServletHelper(request, response);
+        helper.doGet("templates/hotelSearch.html");
     }
 
     @Override
@@ -50,9 +48,5 @@ public class HotelSearchServlet extends HttpServlet implements HotelServlet{
         json.add("hotels", jsonArray);
 
         response.getWriter().println(json);
-
-//        context.put("hotels", dbHandler.getHotelsByKeyword(word));
-//
-//        doGetHelper(request, response, "templates/hotelInfo.html", ve, context);
     }
 }

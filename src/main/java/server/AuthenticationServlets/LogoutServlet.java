@@ -14,13 +14,15 @@ public class LogoutServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("/login");
+        HttpSession session = req.getSession();
+        session.invalidate();
+        resp.sendRedirect("/home");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         session.invalidate();
-        resp.sendRedirect("/login");
+        resp.sendRedirect("/home");
     }
 }

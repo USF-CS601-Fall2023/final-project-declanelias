@@ -1,4 +1,4 @@
-package server;
+package server.HotelInfoServlets;
 
 import server.Database.DatabaseHandler;
 

@@ -29,7 +29,7 @@ public class DatabaseLinkHandler {
                 statement.close();
             }
             catch(SQLException e) {
-                System.out.println(e);
+                System.out.println(e.getStackTrace());
             }
         }
         catch (SQLException ex) {
@@ -55,7 +55,7 @@ public class DatabaseLinkHandler {
             }
 
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e.getStackTrace());
         }
 
         return links;

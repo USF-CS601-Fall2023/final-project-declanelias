@@ -150,4 +150,71 @@ public class DatabaseRegistrationHandler {
 
         return false;
     }
+
+    public String getLastLogin(String username) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            statement = connection.prepareStatement(PreparedStatements.CHECK_LOGIN);
+            statement.setString(1, username);
+
+            ResultSet results = statement.executeQuery();
+            if (results.next()) {
+                return results.getString(1);
+            }
+
+            return null;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return null;
+    }
+
+    private boolean checkLogin(String username) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            statement = connection.prepareStatement(PreparedStatements.CHECK_LOGIN);
+            statement.setString(1, username);
+            ResultSet results = statement.executeQuery();
+            return results.next();
+        } catch (SQLException e) {
+            System.out.println(e.getStackTrace());
+        }
+
+        return false;
+    }
+
+    public void addLogin(String username, String time) {
+        if (checkLogin(username)) {
+            updateLogin(username, time);
+        } else {
+            insertLogin(username, time);
+        }
+    }
+
+    private void updateLogin(String username, String time) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            statement = connection.prepareStatement(PreparedStatements.UPDATE_LOGIN);
+            statement.setString(1, time);
+            statement.setString(2, username);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(e.getStackTrace());
+        }
+    }
+
+    private void insertLogin(String username, String time) {
+        PreparedStatement statement;
+        try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
+            statement = connection.prepareStatement(PreparedStatements.INSERT_LOGIN);
+            statement.setString(1, username);
+            statement.setString(2, time);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(e.getStackTrace());
+        }
+    }
 }

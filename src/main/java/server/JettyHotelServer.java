@@ -10,6 +10,10 @@ import server.AuthenticationServlets.LoginRequiredServlet;
 import server.AuthenticationServlets.LoginServlet;
 import server.AuthenticationServlets.LogoutServlet;
 import server.AuthenticationServlets.RegisterServlet;
+import server.DisplayServlets.DisplayLinkServlet;
+import server.DisplayServlets.FavoriteHotelServlet;
+import server.DisplayServlets.HotelDisplayServlet;
+import server.DisplayServlets.HotelSearchServlet;
 import server.HotelInfoServlets.*;
 
 /**

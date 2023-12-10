@@ -2,7 +2,6 @@ package server.Database;
 
 import HotelData.FileParser;
 import HotelData.ThreadSafeHotels;
-import HotelData.ThreadSafeReviews;
 import server.CommandLineParser;
 
 import java.sql.SQLException;
@@ -13,7 +12,7 @@ public class Main {
 
         DatabaseHandler dbHandler = DatabaseHandler.getInstance();
 //        dbHandler.createTable(PreparedStatements.CREATE_LINK_HISTORY_TABLE);
-        dbHandler.createTable(PreparedStatements.CREATE_HOTEL_TABLE);
+//        dbHandler.createTable(PreparedStatements.CREATE_HOTEL_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_FAVORITE_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_REVIEW_TABLE);
 //        dbHandler.createTable(PreparedStatements.CREATE_USER_TABLE);
@@ -24,7 +23,7 @@ public class Main {
 //        dbhandler.createHotelTable();
 //        dbhandler.createReviewTable();
 
-        loadHotelInfo(args);
+//        loadHotelInfo(args);
 
 //        Set<Hotel> review = dbHandler.getHotelsByKeyword("");
 //        System.out.println(review);

@@ -70,6 +70,20 @@ public class PreparedStatements {
                     "(hotelId, reviewId, averageRating, title, reviewText, userNickname, submissionDate)" +
                     "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
+    public static final String INSERT_LOGIN =
+            "INSERT INTO logins " +
+                    "(username, time) " +
+                    "VALUES (?, ?)";
+
+    public static final String UPDATE_LOGIN =
+            "UPDATE logins " +
+                    "SET time = ? " +
+                    "WHERE username = ?";
+
+    public static final String CHECK_LOGIN =
+            "SELECT time FROM logins " +
+                    "WHERE username = ?";
+
 
     /** Used to insert a new user into the database. */
     public static final String REGISTER_SQL =
@@ -84,11 +98,6 @@ public class PreparedStatements {
     public static final String AUTH_SQL =
             "SELECT username FROM users " +
                     "WHERE username = ? AND password = ?";
-
-    public static final String CHECK_LOGIN =
-            "SELECT time FROM logins " +
-                    "WHERE username = ?";
-
     public static final String CHECK_USERNAME_SQL =
             "SELECT username FROM users " +
                     "WHERE username = ?";

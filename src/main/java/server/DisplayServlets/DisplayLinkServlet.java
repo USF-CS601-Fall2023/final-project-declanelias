@@ -1,9 +1,11 @@
-package server;
+package server.DisplayServlets;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import server.Database.DatabaseHandler;
 import server.Database.Link;
+import server.HotelServlet;
+import server.ServletHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,28 +15,19 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 
-public class DisplayLinkServlet extends HttpServlet implements HotelServlet {
+public class DisplayLinkServlet extends HttpServlet {
 
     private String username;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        username = (String) session.getAttribute("username");
-
-        if (username == null) {
-            response.sendRedirect("/loginRequired");
-        }
-
+        ServletHelper helper = new ServletHelper(request, response);
+        username = helper.getUsername();
         Set<Link> links = DatabaseHandler.getInstance().getLinkHistory(username);
 
-        VelocityEngine ve = (VelocityEngine) getServletContext().getAttribute("templateEngine");
-        VelocityContext context = new VelocityContext();
-        context.put("links", links);
-        doGetHelper(request, response, "templates/linkHistory.html", ve, context);
-
-
+        helper.checkLoginStatus();
+        helper.addContext("links", links);
+        helper.doGet("templates/linkHistory.html");
     }
 
     @Override
