@@ -29,7 +29,9 @@ public class PreparedStatements {
                     "title VARCHAR(255) NOT NULL, " +
                     "reviewText TEXT NOT NULL, " +
                     "userNickname VARCHAR(255) NOT NULL, " +
-                    "submissionDate VARCHAR(255) NOT NULL);";
+                    "submissionDate VARCHAR(255) NOT NULL), " +
+                    "CONSTRAINT unique_hotel_review_username " +
+                    "UNIQUE (hotelId, reviewId, userNickname);";
 
     public static final String CREATE_FAVORITE_TABLE =
             "CREATE TABLE favorites (" +

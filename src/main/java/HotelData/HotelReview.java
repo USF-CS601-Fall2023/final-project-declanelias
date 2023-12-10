@@ -81,7 +81,7 @@ public final class HotelReview implements Comparable<HotelReview>, JsonInterface
 
         int compare = this.getSubmissionDate().compareTo(o.getSubmissionDate());
         if (compare == 0) {
-            return reviewId.compareTo(o.reviewId);
+            return -reviewId.compareTo(o.reviewId);
         } else {
             return -compare;
         }
