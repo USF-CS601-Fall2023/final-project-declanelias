@@ -195,43 +195,6 @@ function createModal(review, hotelId, reviewElement) {
 
 }
 
-
-function createEditForm(review, hotelId, reviewElement) {
-    const editForm = document.createElement('form');
-    editForm.id = 'editForm';
-    editForm.method = 'post';
-    editForm.action = '/editReview';
-
-    // Create and append the hidden inputs
-    const reviewIdInput = document.createElement('input');
-    reviewIdInput.type = 'hidden';
-    reviewIdInput.name = 'reviewId';
-    reviewIdInput.value = review.reviewId;
-    editForm.appendChild(reviewIdInput);
-
-    const hotelIdInput = document.createElement('input');
-    hotelIdInput.type = 'hidden';
-    hotelIdInput.name = 'hotelId';
-    hotelIdInput.value = hotelId;
-    editForm.appendChild(hotelIdInput);
-
-    // Create the "Edit Review" button
-    const editButton = document.createElement('button');
-    editButton.type = 'button';
-    editButton.textContent = 'Edit Review';
-
-    // Attach the openModal function to the button's click event
-    editButton.addEventListener('click', function () {
-        openModal();
-    });
-
-    // Append the button to the form
-    editForm.appendChild(editButton);
-
-    // Append the form to the body or another appropriate container
-    reviewElement.appendChild(editForm);
-}
-
 function openModal() {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("myModal").style.display = "block";
@@ -243,14 +206,13 @@ function closeModal() {
 }
 
 function submitForm(reviewId, hotelId) {
-    var editedReview = document.getElementById("editedReview").value;
-    var editedTitle = document.getElementById("editedTitle").value;
+    const editedReview = document.getElementById(`reviewText_${reviewId}`).querySelector('textarea').value;
+    const editedTitle = document.getElementById(`reviewTitle_${reviewId}`).querySelector('input').value;
 
-    var formData =  "reviewId=" + encodeURIComponent(reviewId) +
+    const formData =  "reviewId=" + encodeURIComponent(reviewId) +
                     "&hotelId=" + encodeURIComponent(hotelId) +
                     "&editedReview=" + encodeURIComponent(editedReview) +
                     "&editedTitle=" + encodeURIComponent(editedTitle);
-
 
     console.log(formData);
 
@@ -258,14 +220,13 @@ function submitForm(reviewId, hotelId) {
         method: 'POST',
         body: formData,
         headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
     })
     .then(response => {
         console.log('Response:', response);
-        closeModal();
-        document.getElementById("reviewText_" + reviewId).innerHTML = editedReview ;
-        document.getElementById("reviewTitle_" + reviewId).innerHTML = "<h3>" + editedTitle + "</h3>";
+        document.getElementById(`reviewText_${reviewId}`).innerHTML = editedReview;
+        document.getElementById(`reviewTitle_${reviewId}`).innerHTML = `<h3>${editedTitle}</h3>`;
     })
     .catch(error => {
         // Handle errors
@@ -297,4 +258,71 @@ function addReview(hotelId) {
         console.error('Error:', error);
     });
 
+}
+
+
+function createEditForm(review, hotelId, reviewElement) {
+    const editForm = document.createElement('form');
+    editForm.id = 'editForm';
+    editForm.method = 'post';
+    editForm.action = '/editReview';
+
+    // Create and append the hidden inputs
+    const reviewIdInput = document.createElement('input');
+    reviewIdInput.type = 'hidden';
+    reviewIdInput.name = 'reviewId';
+    reviewIdInput.value = review.reviewId;
+    editForm.appendChild(reviewIdInput);
+
+    const hotelIdInput = document.createElement('input');
+    hotelIdInput.type = 'hidden';
+    hotelIdInput.name = 'hotelId';
+    hotelIdInput.value = hotelId;
+    editForm.appendChild(hotelIdInput);
+
+    // Create the "Edit Review" button
+    const editButton = document.createElement('button');
+    editButton.type = 'button';
+    editButton.textContent = 'Edit Review';
+
+    // Attach the openEditFields function to the button's click event
+    editButton.addEventListener('click', function () {
+        openEditFields(reviewElement, review);
+    });
+
+    // Append the button to the form
+    editForm.appendChild(editButton);
+
+    // Append the form to the body or another appropriate container
+    reviewElement.appendChild(editForm);
+}
+
+function openEditFields(reviewElement, review) {
+    const titleElement = document.getElementById(`reviewTitle_${review.reviewId}`);
+    const reviewTextElement = document.getElementById(`reviewText_${review.reviewId}`);
+
+    // Remove existing content and event listeners
+    titleElement.innerHTML = '';
+    reviewTextElement.innerHTML = '';
+
+    // Create an input field for the title with the current title
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.value = review.title;
+    titleElement.appendChild(titleInput);
+
+    // Create a textarea for the review with the current review text
+    const reviewTextarea = document.createElement('textarea');
+    reviewTextarea.rows = '4';
+    reviewTextarea.textContent = review.reviewText;
+    reviewTextElement.appendChild(reviewTextarea);
+
+    // Create the "Submit Edited Review" button
+    const submitButton = document.createElement('button');
+    submitButton.type = 'button';
+    submitButton.textContent = 'Submit Edited Review';
+    submitButton.addEventListener('click', function () {
+        submitForm(review.reviewId, hotelId);
+    });
+    reviewElement.appendChild(submitButton);
 }

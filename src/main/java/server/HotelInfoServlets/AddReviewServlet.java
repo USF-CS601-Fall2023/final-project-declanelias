@@ -25,10 +25,14 @@ public class AddReviewServlet extends HttpServlet {
         String rating = request.getParameter("rating");
         String date = LocalDate.now().toString();
 
+        double ratingNum = Double.parseDouble(rating);
+        if (ratingNum > 5) {
+            ratingNum = 5;
+        }
 
         HotelReview review = new HotelReview(
                 Integer.parseInt(hotelId), title, text,
-                username, date, Double.parseDouble(rating));
+                username, date, ratingNum);
 
         DatabaseHandler.getInstance().addReview(review);
     }
