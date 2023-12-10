@@ -86,9 +86,14 @@
     <h1>$hotel.hotelName</h1>
 </div>
 
+
 <section>
     #if($isLoggedIn)
-        <button class="btn btn-primary" onclick="favoriteHotel($hotel.id)">Favorite</button>
+        #if($isFavorite)
+            <button class="btn btn-primary" onclick="removeFavoriteHotel($hotel.id)">Remove Favorite</button>
+        #else
+            <button class="btn btn-primary" onclick="favoriteHotel($hotel.id)">Favorite</button>
+        #end
     #end
 
     <p>

@@ -56,8 +56,8 @@ public class LoginServlet extends HttpServlet implements AuthenticationServlet {
         if (lastLogin == null) {
             return "You have not logged in before";
         } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, dd:MM:yyyy");
-            return LocalDateTime.parse(lastLogin).format(formatter);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MM:dd:yyyy");
+            return "Last Login: " + LocalDateTime.parse(lastLogin).format(formatter);
         }
     }
 }

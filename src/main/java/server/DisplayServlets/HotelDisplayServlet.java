@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Displays the reviews for a hotel
@@ -28,10 +29,21 @@ public class HotelDisplayServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        DatabaseHandler dbHandler = DatabaseHandler.getInstance();
         String hotelId = request.getParameter("hotelId");
-        Hotel hotel = DatabaseHandler.getInstance().getHotel(hotelId);
+        Hotel hotel = dbHandler.getHotel(hotelId);
 
         ServletHelper helper = new ServletHelper(request, response);
+        String username = helper.getUsername();
+
+        Set<Hotel> hotels = DatabaseHandler.getInstance().getFavoriteHotels(username);
+
+        boolean isFavorite = hotels.stream()
+                .anyMatch(h -> h.getId().equals(hotelId));
+
+        System.out.println(isFavorite);
+
+        helper.addContext("isFavorite", isFavorite);
         helper.addContext("hotel", hotel);
         helper.doGet("templates/hotel.html");
     }
