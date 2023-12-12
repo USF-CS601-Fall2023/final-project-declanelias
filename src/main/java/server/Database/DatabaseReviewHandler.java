@@ -7,6 +7,9 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * Handles all database entries and queries regarding reviews
+ */
 public class DatabaseReviewHandler {
 
     private String uri;
@@ -17,6 +20,11 @@ public class DatabaseReviewHandler {
         this.config = config;
     }
 
+    /**
+     * Add a review to the database
+     *
+     * @param review
+     */
     public void addReview(HotelReview review) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -42,6 +50,12 @@ public class DatabaseReviewHandler {
         }
     }
 
+    /**
+     * Get review from the database
+     *
+     * @param hotelId
+     * @return set of hotel reviews
+     */
     public Set<HotelReview> getReviews(String hotelId) {
         PreparedStatement sql;
         Set<HotelReview> reviews = new TreeSet<>();
@@ -71,6 +85,13 @@ public class DatabaseReviewHandler {
         return reviews;
     }
 
+    /**
+     * Update a review
+     * @param hotelId
+     * @param reviewId
+     * @param title
+     * @param text
+     */
     public void updateReview(String hotelId, String reviewId, String title, String text) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -94,6 +115,13 @@ public class DatabaseReviewHandler {
         }
     }
 
+    /**
+     * Delete a review from the database
+     *
+     * @param hotelId
+     * @param reviewId
+     * @param username
+     */
     public void deleteReview(String hotelId, String reviewId, String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {

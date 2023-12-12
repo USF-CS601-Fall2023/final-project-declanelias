@@ -6,6 +6,9 @@ import java.sql.*;
 import java.util.Properties;
 import java.util.Random;
 
+/**
+ * Handles all registration in the database
+ */
 public class DatabaseRegistrationHandler {
 
     private String uri;
@@ -42,6 +45,13 @@ public class DatabaseRegistrationHandler {
         return salt;
     }
 
+    /**
+     * Check if username and password exist
+     *
+     * @param username
+     * @param password
+     * @return true if exists false if not
+     */
     public boolean authenticateUser(String username, String password) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -135,6 +145,12 @@ public class DatabaseRegistrationHandler {
         return hashed;
     }
 
+    /**
+     * Check if username exists in database
+     *
+     * @param username
+     * @return true if it does, false if not
+     */
     public boolean checkIfUsernameExists(String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -151,6 +167,12 @@ public class DatabaseRegistrationHandler {
         return false;
     }
 
+    /**
+     * Get the last login of the user
+     *
+     * @param username
+     * @return last date of the login
+     */
     public String getLastLogin(String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -184,6 +206,12 @@ public class DatabaseRegistrationHandler {
         return false;
     }
 
+    /**
+     * Adds the last time of the login to the database. If user had already logged in,
+     * update the entry. If user hasnt logged in before, insert a new login
+     * @param username
+     * @param time
+     */
     public void addLogin(String username, String time) {
         if (checkLogin(username)) {
             updateLogin(username, time);

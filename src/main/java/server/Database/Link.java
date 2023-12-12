@@ -6,6 +6,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Holds information about a link
+ */
 public class Link implements Comparable<Link> {
 
     private String link;

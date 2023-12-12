@@ -57,6 +57,11 @@ public class DatabaseHandler {
         return config;
     }
 
+    /**
+     * Creates table given a prepared statement
+     *
+     * @param preparedStatement
+     */
     public void createTable(String preparedStatement) {
         Statement statement;
         try (Connection dbConnection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -70,7 +75,7 @@ public class DatabaseHandler {
     }
 
 
-    // Registration methods, check DatabaseRegistrationHandler for javadocs
+    // Authentication methods, check DatabaseAuthenticationnHandler for javadocs
     public void registerUser(String newuser, String newpass) {
         registrationHandler.registerUser(newuser, newpass);
     }

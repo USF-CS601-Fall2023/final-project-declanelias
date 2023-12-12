@@ -1,20 +1,19 @@
 package server.DisplayServlets;
 
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 import server.Database.DatabaseHandler;
 import server.Database.Link;
-import server.HotelServlet;
 import server.ServletHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * Displays the link historu
+ */
 public class DisplayLinkServlet extends HttpServlet {
 
     private String username;

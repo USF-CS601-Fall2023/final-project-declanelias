@@ -7,6 +7,9 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * Does sql queries for getting hotel info
+ */
 public class DatabaseHotelHandler {
 
     private String uri;
@@ -17,6 +20,11 @@ public class DatabaseHotelHandler {
         this.config = config;
     }
 
+    /**
+     * Adds a hotel to the hotel table
+     *
+     * @param hotel
+     */
     public void addHotel(Hotel hotel) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -45,6 +53,12 @@ public class DatabaseHotelHandler {
         }
     }
 
+    /**
+     * Gets hotel given the hotel id from sql table
+     *
+     * @param hotelId
+     * @return hotel from table
+     */
     public Hotel getHotel(String hotelId){
         PreparedStatement sql;
         try (Connection dbConnection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -63,6 +77,13 @@ public class DatabaseHotelHandler {
         return null;
     }
 
+    /**
+     * Gets set of hotels given a prepared statement and param
+     *
+     * @param param param to set in prepared statement
+     * @param preparedStatement
+     * @return
+     */
     public Set<Hotel> getHotelSet(String param, String preparedStatement) {
         PreparedStatement sql;
         Set<Hotel> hotels = new TreeSet<>();
@@ -109,6 +130,11 @@ public class DatabaseHotelHandler {
         return hotel;
     }
 
+    /**
+     * Add hotel and username to favorite table
+     * @param username
+     * @param id id of favorite hotelk
+     */
     public void addFavorite(String username, String id) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -129,6 +155,12 @@ public class DatabaseHotelHandler {
         }
     }
 
+    /**
+     * Removes favorite hotel from
+     *
+     * @param username username of person removing favorite
+     * @param hotelId hotelid to be removed
+     */
     public void removeFavorite(String username, String hotelId) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {

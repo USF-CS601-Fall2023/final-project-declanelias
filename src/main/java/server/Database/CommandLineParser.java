@@ -1,4 +1,4 @@
-package server;
+package server.Database;
 
 import java.util.HashMap;
 import java.util.Map;

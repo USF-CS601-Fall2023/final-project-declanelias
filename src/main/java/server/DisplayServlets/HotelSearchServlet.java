@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import server.Database.DatabaseHandler;
-import server.HotelServlet;
 import server.ServletHelper;
 
 import javax.servlet.ServletException;

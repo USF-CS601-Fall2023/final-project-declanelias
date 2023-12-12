@@ -11,6 +11,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Handles adding review to the database
+ */
 public class AddReviewServlet extends HttpServlet {
 
 

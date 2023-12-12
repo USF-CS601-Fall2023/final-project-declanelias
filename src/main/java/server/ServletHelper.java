@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+/**
+ * Class used by servlets to do the GET requests and to set username and logged in message
+ */
 public class ServletHelper {
 
     private HttpServletResponse response;
@@ -38,12 +41,20 @@ public class ServletHelper {
         setLoggedInStatus();
     }
 
+    /**
+     * Check if the user is logged in
+     *
+     * @throws IOException
+     */
     public void checkLoginStatus() throws IOException {
         if (username == null) {
             response.sendRedirect("/loginRequired");
         }
     }
 
+    /**
+     * Set logged in status in the html
+     */
     private void setLoggedInStatus() {
         if (username == null) {
             context.put("isLoggedIn", false);
@@ -52,10 +63,22 @@ public class ServletHelper {
         }
     }
 
+    /**
+     * Add a value to the velocity context
+     *
+     * @param key name in html
+     * @param value object to be added
+     */
     public void addContext(String key, Object value) {
         context.put(key, value);
     }
 
+    /**
+     * Displays the html file
+     *
+     * @param htmlFile
+     * @throws IOException
+     */
     public void doGet(String htmlFile) throws IOException {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);

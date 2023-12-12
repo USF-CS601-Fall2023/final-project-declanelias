@@ -16,6 +16,12 @@ public class DatabaseLinkHandler {
         this.config = config;
     }
 
+    /**
+     * Adds a link to link history table
+     *
+     * @param username
+     * @param link
+     */
     public void addLinkToHistory(String username, String link) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {
@@ -37,6 +43,12 @@ public class DatabaseLinkHandler {
         }
     }
 
+    /**
+     * Get the history given the username
+     *
+     * @param username
+     * @return Set of links
+     */
     public Set<Link> getLinkHistory(String username) {
         PreparedStatement sql;
         Set<Link> links = new TreeSet<>();
@@ -61,6 +73,11 @@ public class DatabaseLinkHandler {
         return links;
     }
 
+    /**
+     * Removes history given a username
+     *
+     * @param username
+     */
     public void clearLinkHistory(String username) {
         PreparedStatement statement;
         try (Connection connection = DriverManager.getConnection(uri, config.getProperty("username"), config.getProperty("password"))) {

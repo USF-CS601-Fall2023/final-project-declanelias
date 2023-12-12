@@ -1,10 +1,7 @@
 package server.DisplayServlets;
 
 import HotelData.Hotel;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 import server.Database.DatabaseHandler;
-import server.HotelServlet;
 import server.ServletHelper;
 
 import javax.servlet.ServletException;
@@ -14,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
+
+/**
+ * Displays favorite hotels
+ */
 public class FavoriteHotelServlet extends HttpServlet {
 
     @Override

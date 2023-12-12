@@ -1,10 +1,7 @@
 package server.DisplayServlets;
 
 import HotelData.*;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 import server.Database.DatabaseHandler;
-import server.HotelServlet;
 import server.ServletHelper;
 
 import javax.servlet.ServletException;
@@ -40,8 +37,6 @@ public class HotelDisplayServlet extends HttpServlet {
 
         boolean isFavorite = hotels.stream()
                 .anyMatch(h -> h.getId().equals(hotelId));
-
-        System.out.println(isFavorite);
 
         helper.addContext("isFavorite", isFavorite);
         helper.addContext("hotel", hotel);

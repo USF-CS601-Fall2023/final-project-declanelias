@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * Gets reviews from database
+ */
 public class GetReviewsServlet extends HttpServlet {
 
     /**
